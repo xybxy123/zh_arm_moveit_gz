@@ -1,0 +1,39 @@
+# joint_limits.yaml allows the dynamics properties specified in the URDF to be overwritten or augmented as needed
+
+# For beginners, we downscale velocity and acceleration limits.
+# You can always specify higher scaling factors (<= 1.0) in your motion requests.
+default_velocity_scaling_factor: 0.1  # 全局默认缩放因子（代码中会覆盖此值）
+default_acceleration_scaling_factor: 0.1  # 全局默认缩放因子（代码中会覆盖此值）
+
+# Specific joint properties: 启用限制并设置基础上限
+joint_limits:
+  joint1:
+    has_velocity_limits: true  # 启用速度限制
+    max_velocity: 1.0          # 关节1最大速度（单位：rad/s，根据实际机械臂调整，小型臂通常0.5~2.0）
+    has_acceleration_limits: true  # 启用加速度限制
+    max_acceleration: 0.5      # 关节1最大加速度（单位：rad/s²，通常为最大速度的0.5~1倍）
+  joint2:
+    has_velocity_limits: true
+    max_velocity: 1.0
+    has_acceleration_limits: true
+    max_acceleration: 0.5
+  joint3:
+    has_velocity_limits: true
+    max_velocity: 1.0
+    has_acceleration_limits: true
+    max_acceleration: 0.5
+  joint4:
+    has_velocity_limits: true
+    max_velocity: 1.0
+    has_acceleration_limits: true
+    max_acceleration: 0.5
+  joint5:
+    has_velocity_limits: true
+    max_velocity: 1.0
+    has_acceleration_limits: true
+    max_acceleration: 0.5
+  joint6:
+    has_velocity_limits: true
+    max_velocity: 1.0
+    has_acceleration_limits: true
+    max_acceleration: 0.5
