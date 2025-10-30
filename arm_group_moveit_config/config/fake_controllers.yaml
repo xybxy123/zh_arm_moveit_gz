@@ -6,6 +6,7 @@ controller_list:
       - joint2
       - joint3
       - joint4
+      - joint5
 initial:  # Define initial robot poses per group
   - group: arm_group
     pose: home
