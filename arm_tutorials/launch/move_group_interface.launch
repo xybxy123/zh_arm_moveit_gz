@@ -1,0 +1,12 @@
+<launch>
+
+
+  <node name="move_group_interface_node"
+        pkg="arm_tutorials"
+        type="move_group_interface"
+        output="screen">  
+  </node>
+
+
+
+</launch>

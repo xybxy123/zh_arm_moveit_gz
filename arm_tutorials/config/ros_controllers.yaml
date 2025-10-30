@@ -1,0 +1,52 @@
+all_arm_group_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - joint1
+    - joint2
+    - joint3
+    - joint4
+  goal_tolerance: 0.02  # 目标位置最大允许误差（弧度），覆盖关节1的0.008132误差
+  path_tolerance: 0.03  # 轨迹中间点最大允许误差（弧度），避免路径中微小误差失败
+  gains:
+    joint1:
+      p: 409
+      d: 0.06
+      i: 0
+      i_clamp: 11
+    joint2:
+      p: 434.5
+      d: 0.92
+      i: 0.35
+      i_clamp: 10
+    joint3:
+      p: 410
+      d: 0.5
+      i: 0.0045
+      i_clamp: 11
+    joint4:
+      p: 385
+      d: 0.09
+      i: 0.14
+      i_clamp: 11
+end_efffector_group_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - joint5
+    - joint6
+  goal_tolerance: 0.02
+  path_tolerance: 0.03
+  gains:
+    joint5:
+      p: 194
+      d: 0.25
+      i: 0
+      i_clamp: 11
+    joint6:
+      p: 194
+      d: 0.25
+      i: 0
+      i_clamp: 11
+
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50

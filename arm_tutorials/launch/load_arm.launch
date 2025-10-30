@@ -1,0 +1,8 @@
+<launch> 
+
+  <!-- 启动 MoveIt -->
+  <include file="$(find arm_group_moveit_config)/launch/demo.launch"> 
+  </include>
+
+        
+</launch>

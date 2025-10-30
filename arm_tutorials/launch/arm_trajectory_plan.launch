@@ -1,0 +1,7 @@
+<launch> 
+
+  <include file="$(find arm_tutorials)/launch/load_arm.launch"/> 
+  
+    <include file="$(find arm_tutorials)/launch/move_group_interface.launch"/> 
+        
+</launch>
