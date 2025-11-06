@@ -1,0 +1,49 @@
+<launch>
+  <!-- 加载场地URDF到参数服务器 -->
+  <param name="arena_description" 
+         command="$(find xacro)/xacro '$(find zwei)/urdf/zwei.urdf'"/>
+  <param name="robot_description" 
+        command="$(find xacro)/xacro '$(find wheel_leg)/urdf/wheel_leg_robot.xacro'" />
+  <rosparam file="$(find wheel_leg)/config/wheel_leg_controllers.yaml" 
+        command="load" />
+
+  <!-- 启动Gazebo服务 -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find zwei)/worlds/competition.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+  
+  <!-- 在Gazebo中生成场地模型 -->
+  <node name="spawn_arena" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -param arena_description -model competition_area -x 0 -y 0 -z 0"
+        respawn="false" output="screen"/>
+
+        
+
+      <node 
+        pkg="gazebo_ros" 
+        type="spawn_model" 
+        name="spawn_model" 
+        output="screen"
+        
+        args="-urdf -model wheel_leg -param robot_description -x 4.6 -y 1.5 -z 0.3" /> 
+        <!-- z 设定初始高度，防止模型生成时陷入地面 -->
+
+
+
+    <!-- 启动控制器管理器 -->
+    <node 
+        name="controller_spawner" 
+        pkg="controller_manager"
+        type="spawner"
+        output="screen"
+        args="joint_state_controller wheel_effort_controller leg_position_controller" />
+
+
+    <!-- 发布/tf -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+</launch>

@@ -258,7 +258,7 @@
         <child link="left_end" />
         <axis xyz="0 0 1" />
     </joint>
-                    <!-- <joint name="joint5" type="revolute">
+<!-- <joint name="joint5" type="revolute">
         <origin xyz="0 0 -0.0066881981068947" rpy="-1.5707963267949 -0.0524449607991221 -1.54351099917729" />
     <parent link="link4" />
     <child link="left_end" />
@@ -302,78 +302,14 @@
         <child link="right_end" />
         <axis xyz="0 0 -1" />
     </joint>
-                        <!-- <joint name="joint6" type="revolute">
+<!-- <joint name="joint6" type="revolute">
         <origin xyz="0 0 0.01744" rpy="1.5708 -0.7251 -1.5435" />
     <parent link="link4" />
     <child link="right_end" />
     <axis xyz="0 0 -1" />
     <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0"/>
 </joint> -->
-    <transmission name="trans_joint1">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint1">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="joint1_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
-    <transmission name="trans_joint2">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint2">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="joint2_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
-    <transmission name="trans_joint3">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint3">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="joint3_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
-    <transmission name="trans_joint4">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint4">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="joint4_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
-    <transmission name="trans_joint5">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint5">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="joint5_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
-    <transmission name="trans_joint6">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="joint6">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="joint6_motor">
-            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
-    <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/</robotNamespace>
-        </plugin>
-    </gazebo>
+    
 
 
     

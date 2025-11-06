@@ -5,111 +5,138 @@
 
 #include "arm_tutorials/move_group_interface.h"
 
-// Define joint count for "all_arm_group" in SRDF (4 joints: joint1~joint4)
-const int ALL_ARM_JOINT_COUNT = 4;
-const int EE_JOINT_COUNT = 2;  // end_efffector_group: joint5~6
+// 规划组关节数量（arm_model_group为4个关节）
+const int ARM_JOINT_COUNT = 4;
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "arm_control_test");
+    ros::NodeHandle nh;
 
     try {
-        move_group::MoveGroup arm_controller("all_arm_group");
-        // move_group::MoveGroup ee_controller("end_efffector_group");  // 传入末端规划组名称
+        // 初始化控制器
+        move_group::MoveGroup arm_controller("arm_model_group");
 
-        arm_controller.setVelocityScaling(0.05);      // Velocity: 5% of maximum
-        arm_controller.setAccelerationScaling(0.05);  // Acceleration: 5% of maximum
-        arm_controller.setPlanningTime(5.0);          // Planning timeout: 5 seconds
-        arm_controller.setPlanningAttempts(5);        // Planning retry attempts: 5 times
+        // 配置规划参数
+        arm_controller.setVelocityScaling(0.05);
+        arm_controller.setAccelerationScaling(0.05);
+        arm_controller.setPlanningTime(5.0);
+        arm_controller.setPlanningAttempts(5);
+        arm_controller.setPlannerId("RRTConnect");
 
-        // ee_controller.setVelocityScaling(0.05);
-        // ee_controller.setAccelerationScaling(0.05);
-        // ee_controller.setPlanningTime(5.0);
-        // ee_controller.setPlanningAttempts(5);
+        ROS_INFO("\n[Parameter Config Completed] Velocity=0.05, Acceleration=0.05, PlanningTime=5s");
+        ROS_INFO("Starting Test 1 in 2 seconds...");
+        ros::Duration(2.0).sleep();
 
-        ROS_INFO("\n[Parameter configuration completed] Velocity scaling=0.05, Acceleration scaling=0.05, Planning time=5s");
-
-        // 4. Test 1: Get current joint states (verify joint initialization)
-        ROS_INFO("\n[Test 1: Get current joint states]");
+        // Test 1: 获取当前关节状态
+        ROS_INFO("\n[Test 1: Get Current Joint States]");
         std::vector<double> current_joints;
         if (arm_controller.getCurrentJointStates(current_joints)) {
-            ROS_INFO("Current joint states (joint1~joint4):");
-            for (int i = 0; i < ALL_ARM_JOINT_COUNT; ++i) {
-                ROS_INFO("joint%d: %.4f radians (=%.1f degrees)", i + 1, current_joints[i], current_joints[i] * 180 / M_PI);
+            ROS_INFO("Current Joint States (joint1~joint4):");
+            for (int i = 0; i < ARM_JOINT_COUNT; ++i) {
+                ROS_INFO("joint%d: %.4f rad (%.1f°)", i + 1, current_joints[i], current_joints[i] * 180 / M_PI);
             }
         } else {
-            ROS_WARN("Test 1 failed: Unable to get current joint states, proceeding with subsequent tests");
+            ROS_WARN("Test 1 Failed: Cannot get joint states");
         }
+        ROS_INFO("Starting Test 2 in 2 seconds...");
+        ros::Duration(2.0).sleep();
 
-        // 5. Test 2: Joint space movement → move to "init_pose" defined in SRDF (all joints 0 radians)
-        ROS_INFO("\n[Test 2: Move to SRDF initial pose (init_pose)]");
-        std::vector<double> init_joint_pos = {0.0, 0.0, 0.0, 0.0};  // Joint values for init_pose in SRDF
+        // Test 2: 移动到初始姿态（所有关节0°）
+        ROS_INFO("\n[Test 2: Move to Initial Pose (all joints 0°)]");
+        std::vector<double> init_joint_pos(ARM_JOINT_COUNT, 0.0);
         if (arm_controller.moveToJointSpace(init_joint_pos)) {
-            ROS_INFO("Test 2 succeeded: Moved to initial pose (joint1~joint4=0 degrees)");
+            ROS_INFO("Test 2 Succeeded: Reached initial pose");
         } else {
-            // ROS_ERROR("Test 2 failed: Initial pose planning/execution failed");
-            // Pause for 3s if initial pose fails to avoid affecting subsequent tests
-            // ros::Duration(10.0).sleep();
+            ROS_ERROR("Test 2 Failed: Cannot move to initial pose");
         }
+        ROS_INFO("Starting Test 3 in 2 seconds...");
+        ros::Duration(2.0).sleep();
 
-        ros::Duration(1.0).sleep();
-
-        // // 6. Test 3: Custom joint space movement (joint1=90°, joint2=45°, joint3=-90°, joint4=-90°)
-        ROS_INFO("\n[Test 3: Custom joint space movement]");
+        // Test 3: 自定义关节空间运动
+        ROS_INFO("\n[Test 3: Custom Joint Space Movement]");
         std::vector<double> custom_joint_pos = {
-            M_PI / 2,   // joint1: 0 degrees
-            M_PI / 4,   // joint2: 45 degrees (0.7854 radians)
-            -M_PI / 2,  // joint3: -30 degrees (-0.5236 radians)
-            -M_PI / 2   // joint4: 0 degrees
+            M_PI / 2,   // joint1: 90°
+            M_PI / 4,   // joint2: 45°
+            -M_PI / 6,  // joint3: -30°
+            -M_PI / 2   // joint4: -90°
         };
         if (arm_controller.moveToJointSpace(custom_joint_pos)) {
-            ROS_INFO("Test 3 succeeded: Reached custom joint position");
-            ROS_INFO("Custom joint states: joint1=0°, joint2=45°, joint3=-30°, joint4=0°");
+            ROS_INFO("Test 3 Succeeded: Reached custom pose");
+            ROS_INFO("Custom Pose: joint1=90°, joint2=45°, joint3=-30°, joint4=-90°");
         } else {
-            // ROS_ERROR("Test 4 failed: Custom joint planning/execution failed");
+            ROS_ERROR("Test 3 Failed: Cannot move to custom joint space");
         }
-        ros::Duration(4.0).sleep();
+        ROS_INFO("Starting Test 4 in 2 seconds...");
+        ros::Duration(2.0).sleep();
 
-        /*---------------------！！！自由度太少 没办法做笛卡尔运动！！！------------------------*/
-        // // 7. Test 4:  pose control (move end effector to target pose in base_link frame)
-        // // Pose description: Based on "all_arm_group" workspace in SRDF (link4 as end effector), set reasonable coordinates to avoid
-        // // out-of-bounds
-        ROS_INFO("\n[Test 4: Cartesian pose control]");
-        geometry_msgs::Pose target_pose;
-        // Orientation: No rotation (quaternion w=1.0, same as base_link)
-        target_pose.orientation.w = 1.0;
-        target_pose.orientation.x = 0.0;
-        target_pose.orientation.y = 0.0;
-        target_pose.orientation.z = 0.0;
-        // Position: x=0.3m, y=0.0m, z=0.4m (adapt to 4-joint arm workspace, avoid collision)
-        target_pose.position.x = 0.15;
-        target_pose.position.y = 0.1;
-        target_pose.position.z = 0.2;
+        // Test 4: 使用逆运动学计算关节角度，然后关节空间控制
+        ROS_INFO("\n[Test 4: Cartesian Pose Control using IK]");
 
-        if (arm_controller.moveToPoseTarget(target_pose)) {
-            ROS_INFO("Test 4 succeeded: End effector reached target pose");
-            ROS_INFO("Target pose: x=0.15m, y=0.1m, z=0.2m, no rotation");
-        } else {
-            ROS_ERROR("Test 4 failed: Pose planning/execution failed (may be out of workspace)");
+        // 定义多个目标位置进行尝试
+        std::vector<std::tuple<double, double, double, std::string>> test_positions = {{0.3, 0.0, 0.3, "正前方中等高度"},
+                                                                                       {0.2, 0.0, 0.2, "正前方较低位置"},
+                                                                                       {0.15, 0.1, 0.15, "右前方近位置"},
+                                                                                       {0.25, 0.0, 0.25, "正前方中间位置"}};
+
+        bool test4_success = false;
+
+        for (const auto& pos : test_positions) {
+            geometry_msgs::Pose target_pose;
+            target_pose.orientation.w = 1.0;
+            target_pose.orientation.x = 0.0;
+            target_pose.orientation.y = 0.0;
+            target_pose.orientation.z = 0.0;
+
+            target_pose.position.x = std::get<0>(pos);
+            target_pose.position.y = std::get<1>(pos);
+            target_pose.position.z = std::get<2>(pos);
+
+            ROS_INFO("尝试目标位置: %s (%.2f, %.2f, %.2f)", std::get<3>(pos).c_str(), target_pose.position.x, target_pose.position.y,
+                     target_pose.position.z);
+
+            // 使用逆运动学计算关节角度
+            std::vector<double> ik_joint_pos;
+            if (arm_controller.calculateIK(target_pose, ik_joint_pos, "end_effector_link")) {
+                ROS_INFO("逆运动学计算成功，使用关节空间控制移动到目标位置");
+
+                if (arm_controller.moveToJointSpace(ik_joint_pos)) {
+                    ROS_INFO("Test 4 Succeeded: 通过逆运动学到达目标位置 %s", std::get<3>(pos).c_str());
+                    ROS_INFO("Target Pose: x=%.2fm, y=%.2fm, z=%.2fm, no rotation", target_pose.position.x, target_pose.position.y,
+                             target_pose.position.z);
+                    test4_success = true;
+                    break;
+                } else {
+                    ROS_WARN("关节空间控制失败，尝试下一个位置");
+                }
+            } else {
+                ROS_WARN("逆运动学计算失败，无法到达目标位置 %s", std::get<3>(pos).c_str());
+            }
+
+            ros::Duration(1.0).sleep();  // 每次尝试间隔1秒
         }
-        ros::Duration(4.0).sleep();
 
-        // 8. Test 5: Return to initial pose (reset before ending test)
-        ROS_INFO("\n[Test 5: Return to initial pose (end test)]");
+        if (!test4_success) {
+            ROS_ERROR("Test 4 Failed: 所有目标位置都无法通过逆运动学到达");
+            ROS_INFO("这可能是由于工作空间限制或机械臂构型限制");
+        }
+
+        ROS_INFO("Starting Test 5 in 2 seconds...");
+        ros::Duration(2.0).sleep();
+
+        // Test 5: 返回初始姿态
+        ROS_INFO("\n[Test 5: Return to Initial Pose]");
         if (arm_controller.moveToJointSpace(init_joint_pos)) {
-            ROS_INFO("Test 5 succeeded: Returned to initial pose, test completed");
+            ROS_INFO("Test 5 Succeeded: Returned to initial pose");
         } else {
-            ROS_ERROR("Test 5 failed: Unable to return to initial pose");
+            ROS_ERROR("Test 5 Failed: Cannot return to initial pose");
         }
 
     } catch (const std::exception& e) {
-        // Catch exceptions thrown by constructor (e.g., planning group not found, joint model group获取失败)
-        ROS_ERROR("\n===================== Test node exception =====================");
-        ROS_ERROR("Exception reason: %s", e.what());
+        ROS_ERROR("\n[Test Exception] Reason: %s", e.what());
         return -1;
     }
 
-    // 10. Test ended, release resources
-    ROS_INFO("\n===================== All test steps completed =====================");
+    ROS_INFO("\n[All Tests Completed]");
     ros::shutdown();
     return 0;
 }

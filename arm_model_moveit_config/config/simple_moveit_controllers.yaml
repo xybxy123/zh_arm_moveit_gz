@@ -1,0 +1,10 @@
+controller_list:
+  - name: arm_model_group_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - base_to_turret
+      - turret_to_first_arm
+      - first_to_second_arm
+      - second_to_third_arm

@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="model" default="$(find arm_model)/urdf/arm_simple.xacro"/>
+  <param name="robot_description" command="$(find xacro)/xacro '$(arg model)'"/>
+  <param name="arena_description" command="$(find xacro)/xacro '$(find zwei)/urdf/zwei.urdf'"/>
+  <!-- 加载所有关节PID参数（含第三连杆，解除注释） -->
+  <!-- <rosparam>
+    gazebo_ros_control:
+      pid_gains:
+        base_to_turret:
+          p: 0.0
+          i: 0.0
+          d: 0.0
+          i_clamp: 0.0
+          antiwindup: false
+        turret_to_first_arm:
+          p: 0.0
+          i: 0.0
+          d: 0.0
+          i_clamp: 0.0
+          antiwindup: false
+        first_to_second_arm:
+          p: 0.0
+          i: 0.0
+          d: 0.0
+          i_clamp: 0.0
+          antiwindup: false
+        second_to_third_arm:  # 新增第三连杆关节PID配置
+          p: 0.0
+          i: 0.0
+          d: 0.0
+          i_clamp: 0.0
+          antiwindup: false
+  </rosparam> -->
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <!-- 前面方块( 0 , 0.65 , 0 ) -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" 
+        args="-param robot_description -urdf -model simple_arm_3link -x 9 -y 4.35 -z 0.7598"
+        output="screen" />
+
+  <node name="spawn_arena" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -param arena_description -model competition_area -x 0 -y 0 -z 0"
+        respawn="false" output="screen"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <rosparam file="$(find arm_model)/config/arm_control.yaml" command="load"/>
+
+  <!-- 启动所有控制器（新增第三连杆控制器） -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" args="joint_state_controller
+                              base_to_turret_position_controller
+                              turret_to_first_arm_position_controller
+                              first_to_second_arm_position_controller
+                              second_to_third_arm_position_controller"/>  <!-- 新增第三连杆控制器 -->
+
+  <node name="rviz" pkg="rviz" type="rviz" />
+
+</launch>

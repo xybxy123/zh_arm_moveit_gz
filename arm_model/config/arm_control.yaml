@@ -1,0 +1,78 @@
+# 关节状态控制器（必须保留，用于发布关节状态）
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50.0  # 发布频率50Hz
+
+
+# # 原有单个关节位置控制器（保留，用于单独控制单个关节）
+# base_to_turret_position_controller:
+#   type: position_controllers/JointPositionController
+#   joint: base_to_turret
+#   joint_interface: hardware_interface/PositionJointInterface
+
+# turret_to_first_arm_position_controller:
+#   type: position_controllers/JointPositionController
+#   joint: turret_to_first_arm
+#   joint_interface: hardware_interface/PositionJointInterface
+
+# first_to_second_arm_position_controller:
+#   type: position_controllers/JointPositionController
+#   joint: first_to_second_arm
+#   joint_interface: hardware_interface/PositionJointInterface
+
+# second_to_third_arm_position_controller:
+#   type: position_controllers/JointPositionController
+#   joint: second_to_third_arm
+#   joint_interface: hardware_interface/PositionJointInterface
+
+
+# 新增：位置模式关节轨迹控制器（用于多关节协调轨迹跟踪，基于位置控制）
+arm_position_trajectory_controller:
+  type: position_controllers/JointTrajectoryController  # 位置轨迹控制器类型
+  joints:  # 控制的关节列表（与机械臂关节名完全一致）
+    - base_to_turret
+    - first_to_second_arm
+    - second_to_third_arm
+    - turret_to_first_arm
+  joint_interface: hardware_interface/PositionJointInterface  # 位置控制接口（核心修改）
+
+  # 位置控制核心参数：每个关节的PID控制器参数（用于位置跟踪闭环控制）
+  gains:
+    base_to_turret:
+      p: 150.0   # 比例增益足够大，确保驱动力
+      i: 0.5     # 小积分消除静态误差
+      d: 10.0    # 微分抑制震荡
+      i_clamp: 5.0
+    first_to_second_arm:
+      p: 150.0
+      i: 0.5
+      d: 10.0
+      i_clamp: 5.0
+    second_to_third_arm:
+      p: 120.0   # 末端关节负载小，略减小
+      i: 0.3
+      d: 8.0
+      i_clamp: 3.0
+    turret_to_first_arm:
+      p: 150.0
+      i: 0.5
+      d: 10.0
+      i_clamp: 5.0
+
+
+  # # 轨迹跟踪约束（位置控制的精度要求）
+  # constraints:
+  #   goal_time: 0.5   # 到达目标的允许时间误差（秒）
+  #   stopped_velocity_tolerance: 0.02  # 停止时的速度容忍度（rad/s，位置控可略宽松）
+  #   # 每个关节的位置容忍度（位置控制精度，根据需求调整）
+  #   base_to_turret: 0.01
+  #   first_to_second_arm: 0.01
+  #   second_to_third_arm: 0.01
+  #   turret_to_first_arm: 0.01
+
+  # # 前馈控制（位置控制常用速度前馈，提升动态响应）
+  # velocity_ff: true  # 启用速度前馈（补偿轨迹速度）
+  # acceleration_ff: false  # 禁用加速度前馈（简化配置）
+
+  # # 控制周期（与硬件周期匹配，默认10ms）
+  # control_period: 0.01

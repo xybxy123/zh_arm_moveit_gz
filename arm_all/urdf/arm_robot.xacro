@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot name="arm_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find arm_all)/urdf/arm_transmissions.xacro" />
+  <xacro:include filename="$(find arm_all)/urdf/arm_all.urdf" />
+
+
+  
+  <!-- 关节1: 力矩控制 + 位置控制 -->
+  <!-- <xacro:arm_effort_transmission name="joint1" effort_limit="10" velocity_limit="1.0"/> -->
+  <xacro:arm_position_transmission name="joint1" lower="-3.14" upper="3.14" velocity_limit="1.0" effort_limit="10"/>
+  
+  <!-- 关节2: 力矩控制 + 位置控制 -->
+  <!-- <xacro:arm_effort_transmission name="joint2" effort_limit="10" velocity_limit="1.0"/> -->
+  <xacro:arm_position_transmission name="joint2" lower="-3.14" upper="3.14" velocity_limit="1.0" effort_limit="10"/>
+  
+  <!-- 关节3: 力矩控制 + 位置控制 -->
+  <!-- <xacro:arm_effort_transmission name="joint3" effort_limit="10" velocity_limit="1.0"/> -->
+  <xacro:arm_position_transmission name="joint3" lower="-3.14" upper="3.14" velocity_limit="1.0" effort_limit="10"/>
+  
+  <!-- 关节4: 力矩控制 + 位置控制 -->
+  <!-- <xacro:arm_effort_transmission name="joint4" effort_limit="10" velocity_limit="1.0"/> -->
+  <xacro:arm_position_transmission name="joint4" lower="-3.14" upper="3.14" velocity_limit="1.0" effort_limit="10"/>
+  
+  <!-- 关节5: 力矩控制 + 位置控制 -->
+  <!-- <xacro:arm_effort_transmission name="joint5" effort_limit="10" velocity_limit="1.0"/> -->
+  <xacro:arm_position_transmission name="joint5" lower="-3.14" upper="3.14" velocity_limit="1.0" effort_limit="10"/>
+  
+  <!-- 关节6: 力矩控制 + 位置控制 -->
+  <!-- <xacro:arm_effort_transmission name="joint6" effort_limit="10" velocity_limit="1.0"/> -->
+  <xacro:arm_position_transmission name="joint6" lower="-3.14" upper="3.14" velocity_limit="1.0" effort_limit="10"/>
+
+  <!-- Gazebo ROS Control 插件 -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+      <controlPeriod>0.001</controlPeriod>
+      <robotParam>robot_description</robotParam>
+    </plugin>
+  </gazebo>
+
+</robot>

@@ -1,0 +1,28 @@
+arm_model_group_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - base_to_turret
+    - turret_to_first_arm
+    - first_to_second_arm
+    - second_to_third_arm
+  gains:
+    base_to_turret:
+      p: 0
+      d: 0
+      i: 0
+      i_clamp: 1
+    turret_to_first_arm:
+      p: 0
+      d: 0
+      i: 0
+      i_clamp: 1
+    first_to_second_arm:
+      p: 0
+      d: 0
+      i: 0
+      i_clamp: 1
+    second_to_third_arm:
+      p: 0
+      d: 0
+      i: 0
+      i_clamp: 1

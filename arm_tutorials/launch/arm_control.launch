@@ -1,6 +1,6 @@
 <launch> 
 
-  <include file="$(find arm_tutorials)/launch/load_arm.launch"/> 
+  <include file="$(find arm_model)/launch/arm_model_moveit.launch"/> 
   
     <include file="$(find arm_tutorials)/launch/move_group_interface.launch"/> 
         

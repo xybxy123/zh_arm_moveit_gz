@@ -1,0 +1,99 @@
+
+  # 关节状态控制器
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100
+
+  # ========== 位置控制器 ==========
+  joint1_position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint1
+    pid: {p: 100.0, i: 1.0, d: 10.0}
+    
+  joint2_position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint2
+    pid: {p: 100.0, i: 1.0, d: 10.0}
+    
+  joint3_position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint3
+    pid: {p: 100.0, i: 1.0, d: 10.0}
+    
+  joint4_position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint4
+    pid: {p: 100.0, i: 1.0, d: 10.0}
+    
+  joint5_position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint5
+    pid: {p: 100.0, i: 1.0, d: 10.0}
+    
+  joint6_position_controller:
+    type: position_controllers/JointPositionController
+    joint: joint6
+    pid: {p: 100.0, i: 1.0, d: 10.0}
+
+  # # ========== 力矩控制器 ==========
+  # joint1_effort_controller:
+  #   type: effort_controllers/JointEffortController
+  #   joint: joint1
+    
+  # joint2_effort_controller:
+  #   type: effort_controllers/JointEffortController
+  #   joint: joint2
+    
+  # joint3_effort_controller:
+  #   type: effort_controllers/JointEffortController
+  #   joint: joint3
+    
+  # joint4_effort_controller:
+  #   type: effort_controllers/JointEffortController
+  #   joint: joint4
+    
+  # joint5_effort_controller:
+  #   type: effort_controllers/JointEffortController
+  #   joint: joint5
+    
+  # joint6_effort_controller:
+  #   type: effort_controllers/JointEffortController
+  #   joint: joint6
+
+  # # ========== 轨迹控制器（位置模式） ==========
+  # arm_position_trajectory_controller:
+  #   type: position_controllers/JointTrajectoryController
+  #   joints:
+  #     - joint1
+  #     - joint2
+  #     - joint3
+  #     - joint4
+  #     - joint5
+  #     - joint6
+  #   constraints:
+  #     goal_time: 2.0
+  #     stopped_velocity_tolerance: 0.05
+  #     joint1: {trajectory: 0.5, goal: 0.5}
+  #     joint2: {trajectory: 0.5, goal: 0.5}
+  #     joint3: {trajectory: 0.5, goal: 0.5}
+  #     joint4: {trajectory: 0.5, goal: 0.5}
+  #     joint5: {trajectory: 0.5, goal: 0.5}
+  #     joint6: {trajectory: 0.5, goal: 0.5}
+  #   state_publish_rate: 50
+  #   action_monitor_rate: 20
+
+  # # ========== 轨迹控制器（力矩模式） ==========
+  # arm_effort_trajectory_controller:
+  #   type: effort_controllers/JointTrajectoryController
+  #   joints:
+  #     - joint1
+  #     - joint2
+  #     - joint3
+  #     - joint4
+  #     - joint5
+  #     - joint6
+  #   constraints:
+  #     goal_time: 2.0
+  #     stopped_velocity_tolerance: 0.05
+  #   state_publish_rate: 50
+  #   action_monitor_rate: 20

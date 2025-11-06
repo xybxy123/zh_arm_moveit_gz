@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+<robot name="simple_arm_3link" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="world"/>
+
+
+  <xacro:property name="base_radius" value="0.0" />   
+  <xacro:property name="base_height" value="0.0" />  
+  <xacro:property name="gap_between_base_turret" value="0" /> 
+  <xacro:property name="first_arm_length" value="0.45857" />
+  <xacro:property name="first_arm_radius" value="0.03" />
+  <xacro:property name="first_arm_mass" value="0.5" />
+  
+  <xacro:property name="second_arm_length" value="0.41476" />
+  <xacro:property name="second_arm_radius" value="0.03" />
+  <xacro:property name="second_arm_mass" value="0.5" />
+  
+  <!-- 添加第三连杆属性 -->
+  <xacro:property name="third_arm_length" value="0.1335" />
+  <xacro:property name="third_arm_radius" value="0.03" />
+  <xacro:property name="third_arm_mass" value="0.3" />
+  
+  <!-- 添加末端小球属性 -->
+  <xacro:property name="end_effector_radius" value="0.001" />
+  <xacro:property name="end_effector_mass" value="0.001" />
+  
+  <xacro:property name="joint_damping" value="1.0" />  
+  <xacro:property name="joint_effort" value="20" />   
+  <xacro:property name="joint_velocity" value="1.0" />  
+  
+  <xacro:property name="base_mass" value="1.0" />    
+  <xacro:property name="turret_mass" value="0.5" />   
+
+
+  <xacro:macro name="position_joint_transmission" params="joint_name trans_name hardware_interface">
+    <transmission name="${trans_name}">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${joint_name}">
+        <hardwareInterface>${hardware_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${joint_name}_motor">
+        <hardwareInterface>${hardware_interface}</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction> 
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  <material name="gray">
+    <color rgba="0.7 0.7 0.7 1"/>
+  </material>
+  <material name="red">
+    <color rgba="0.8 0 0 1"/>
+  </material>
+  <!-- 添加绿色材料用于第三连杆 -->
+  <material name="green">
+    <color rgba="0 0.8 0 1"/>
+  </material>
+  <!-- 添加黄色材料用于末端小球 -->
+  <material name="yellow">
+    <color rgba="0.8 0.8 0 1"/>
+  </material>
+
+
+
+
+  <link name="base_link">
+    <inertial>
+      <mass value="${base_mass}"/>
+      <origin xyz="0 0 0"/> 
+      <inertia ixx="${(1/12)*base_mass*(3*base_radius**2 + base_height**2)}" 
+               ixy="0" ixz="0" 
+               iyy="${(1/12)*base_mass*(3*base_radius**2 + base_height**2)}" 
+               iyz="0" 
+               izz="${(1/2)*base_mass*base_radius**2}"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder length="${base_height}" radius="${base_radius}"/> 
+      </geometry>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${base_height}" radius="${base_radius}"/> 
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="world_to_base_fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+  </joint>
+
+
+  <link name="turret_link">
+    <inertial>
+      <mass value="${turret_mass}"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="${(1/12)*turret_mass*(3*base_radius**2 + base_height**2)}" 
+               ixy="0" ixz="0" 
+               iyy="${(1/12)*turret_mass*(3*base_radius**2 + base_height**2)}" 
+               iyz="0" 
+               izz="${(1/2)*turret_mass*base_radius**2}"/>
+    </inertial>
+    
+    <visual name="turret_blue_part">
+      <origin xyz="0 0 ${-base_height/4}" />
+      <geometry>
+        <cylinder length="${base_height/2}" radius="${base_radius}"/> 
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <visual name="turret_red_part">
+      <origin xyz="0 0 ${base_height/4}" />
+      <geometry>
+        <cylinder length="${base_height/2}" radius="${base_radius}"/> 
+      </geometry>
+      <material name="red"/>
+    </visual>
+    
+    <collision>
+      <geometry>
+        <cylinder length="${base_height}" radius="${base_radius}"/> 
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="base_to_turret" type="revolute">
+    <parent link="base_link"/>
+    <child link="turret_link"/>
+    <origin xyz="0 0 ${base_height + gap_between_base_turret + base_height/2}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="${joint_effort}" velocity="${joint_velocity}"/> 
+    <dynamics damping="${joint_damping}" friction="0.1"/> 
+  </joint>
+
+  <gazebo joint="base_to_turret">
+    <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+  </gazebo>
+
+  <xacro:position_joint_transmission 
+    joint_name="base_to_turret" 
+    trans_name="base_to_turret_trans" 
+    hardware_interface="hardware_interface/PositionJointInterface" />
+
+
+  <!-- 第一连杆 -->
+  <link name="first_arm_link">
+    <inertial>
+      <mass value="${first_arm_mass}"/>
+      <origin xyz="0 0 ${first_arm_length/2}"/> <!-- 重心在连杆中心 -->
+      <inertia ixx="${(1/12)*first_arm_mass*(3*first_arm_radius**2 + first_arm_length**2)}" 
+               ixy="0" ixz="0" 
+               iyy="${(1/12)*first_arm_mass*(3*first_arm_radius**2 + first_arm_length**2)}" 
+               iyz="0" 
+               izz="${(1/2)*first_arm_mass*first_arm_radius**2}"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 ${first_arm_length/2}"/> <!-- 圆柱体中心在连杆中心 -->
+      <geometry>
+        <cylinder length="${first_arm_length}" radius="${first_arm_radius}"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${first_arm_length/2}"/> <!-- 碰撞体中心也在连杆中心 -->
+      <geometry>
+        <cylinder length="${first_arm_length}" radius="${first_arm_radius}"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <!-- 第一连杆关节：位于云台上表面，第一连杆下表面与云台上表面连接 -->
+  <joint name="turret_to_first_arm" type="revolute">
+    <parent link="turret_link"/>
+    <child link="first_arm_link"/>
+    <!-- 关节位于云台上表面，第一连杆下表面与云台上表面连接 -->
+    <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}" friction="0.1"/>
+  </joint>
+
+  <gazebo joint="turret_to_first_arm">
+    <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+  </gazebo>
+
+  <xacro:position_joint_transmission 
+    joint_name="turret_to_first_arm" 
+    trans_name="turret_to_first_arm_trans" 
+    hardware_interface="hardware_interface/PositionJointInterface" />
+
+
+  <!-- 第二连杆 -->
+  <link name="second_arm_link">
+    <inertial>
+      <mass value="${second_arm_mass}"/>
+      <origin xyz="0 0 ${second_arm_length/2}"/> <!-- 重心在连杆中心 -->
+      <inertia ixx="${(1/12)*second_arm_mass*(3*second_arm_radius**2 + second_arm_length**2)}" 
+               ixy="0" ixz="0" 
+               iyy="${(1/12)*second_arm_mass*(3*second_arm_radius**2 + second_arm_length**2)}" 
+               iyz="0" 
+               izz="${(1/2)*second_arm_mass*second_arm_radius**2}"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 ${second_arm_length/2}"/> <!-- 圆柱体中心在连杆中心 -->
+      <geometry>
+        <cylinder length="${second_arm_length}" radius="${second_arm_radius}"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${second_arm_length/2}"/> <!-- 碰撞体中心也在连杆中心 -->
+      <geometry>
+        <cylinder length="${second_arm_length}" radius="${second_arm_radius}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- 第二连杆关节：位于第一连杆上表面，第二连杆下表面与第一连杆上表面连接 -->
+  <joint name="first_to_second_arm" type="revolute">
+    <parent link="first_arm_link"/>
+    <child link="second_arm_link"/>
+    <!-- 关节位于第一连杆上表面 -->
+    <origin xyz="0 0 ${first_arm_length}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14" upper="3.14" effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}" friction="0.1"/>
+  </joint>
+
+  <gazebo joint="first_to_second_arm">
+    <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+  </gazebo>
+
+  <xacro:position_joint_transmission 
+    joint_name="first_to_second_arm" 
+    trans_name="first_to_second_arm_trans" 
+    hardware_interface="hardware_interface/PositionJointInterface" />
+
+
+  <!-- 第三连杆 -->
+  <link name="third_arm_link">
+    <inertial>
+      <mass value="${third_arm_mass}"/>
+      <origin xyz="0 0 ${third_arm_length/2}"/> <!-- 重心在连杆中心 -->
+      <inertia ixx="${(1/12)*third_arm_mass*(3*third_arm_radius**2 + third_arm_length**2)}" 
+               ixy="0" ixz="0" 
+               iyy="${(1/12)*third_arm_mass*(3*third_arm_radius**2 + third_arm_length**2)}" 
+               iyz="0" 
+               izz="${(1/2)*third_arm_mass*third_arm_radius**2}"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 ${third_arm_length/2}"/> <!-- 圆柱体中心在连杆中心 -->
+      <geometry>
+        <cylinder length="${third_arm_length}" radius="${third_arm_radius}"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${third_arm_length/2}"/> <!-- 碰撞体中心也在连杆中心 -->
+      <geometry>
+        <cylinder length="${third_arm_length}" radius="${third_arm_radius}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- 第三连杆关节：位于第二连杆上表面，第三连杆下表面与第二连杆上表面连接 -->
+  <joint name="second_to_third_arm" type="revolute">
+    <parent link="second_arm_link"/>
+    <child link="third_arm_link"/>
+    <!-- 关节位于第二连杆上表面 -->
+    <origin xyz="0 0 ${second_arm_length}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14" upper="3.14" effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <dynamics damping="${joint_damping}" friction="0.1"/>
+  </joint>
+
+  <gazebo joint="second_to_third_arm">
+    <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+  </gazebo>
+
+  <xacro:position_joint_transmission 
+    joint_name="second_to_third_arm" 
+    trans_name="second_to_third_arm_trans" 
+    hardware_interface="hardware_interface/PositionJointInterface" />
+
+  <!-- 末端小球链接 -->
+  <link name="end_effector_link">
+    <inertial>
+      <mass value="${end_effector_mass}"/>
+      <origin xyz="0 0 0"/>
+      <!-- 球体的惯性矩阵 -->
+      <inertia ixx="${(2/5)*end_effector_mass*end_effector_radius**2}" 
+               ixy="0" ixz="0" 
+               iyy="${(2/5)*end_effector_mass*end_effector_radius**2}" 
+               iyz="0" 
+               izz="${(2/5)*end_effector_mass*end_effector_radius**2}"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="${end_effector_radius}"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="${end_effector_radius}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- 末端小球关节：固定关节连接到第三连杆末端 -->
+  <joint name="third_arm_to_end_effector" type="fixed">
+    <parent link="third_arm_link"/>
+    <child link="end_effector_link"/>
+    <!-- 关节位于第三连杆末端 -->
+    <origin xyz="0 0 ${third_arm_length}" rpy="0 0 0"/>
+  </joint>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+
+</robot>
