@@ -41,7 +41,7 @@ bool VerticalConstraintPlanner::moveTheta3(double target_theta3) {
     return success;
 }
 
-// 修正：通过关节名称列表获取 theta1/theta2 索引（关键修复）
+// 通过关节名称列表获取 theta1/theta2 索引
 std::pair<double, double> VerticalConstraintPlanner::getCurrentTheta1Theta2() {
     // 1. 获取主组关节名称列表（顺序与关节值向量一致）
     std::vector<std::string> joint_names = move_group_main_.getJointNames();
@@ -105,7 +105,7 @@ bool VerticalConstraintPlanner::moveToAbsolutePosition(double x, double y, doubl
         return false;
     }
 
-    // 执行主关节运动后，同步 theta3（修正：不用结构化绑定，兼容C++14）
+    // 执行主关节运动后，同步 theta3
     move_group_main_.execute(main_plan);
     std::pair<double, double> theta_pair = getCurrentTheta1Theta2();  // 替代 auto [theta1, theta2]
     double theta1 = theta_pair.first;
