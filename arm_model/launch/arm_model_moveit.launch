@@ -35,7 +35,7 @@
 
 <!-- 只保留这两个控制器 -->
 <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-      output="screen" args="joint_state_controller  arm_3joints_position_trajectory_controller"/>  
+      output="screen" args="joint_state_controller  arm_3joints_position_trajectory_controller arm_last_joints_position_trajectory_controller"/>  
 
 
   <!-- <node name="rviz" pkg="rviz" type="rviz" /> -->

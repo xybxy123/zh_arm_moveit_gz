@@ -8,54 +8,69 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
+#include <cmath>  // 用于 M_PI 和角度计算
+
 class VerticalConstraintPlanner {
 private:
-    // MoveIt核心对象
-    moveit::planning_interface::MoveGroupInterface move_group_;
+    // 前3关节规划组（base_to_turret、turret_to_first_arm、first_to_second_arm）
+    moveit::planning_interface::MoveGroupInterface move_group_main_;
+    // theta3 单独控制组（仅 second_to_third_arm）
+    moveit::planning_interface::MoveGroupInterface move_group_theta3_;
     moveit::planning_interface::PlanningSceneInterface planning_scene_interface_;
-    std::string end_effector_link_;  // 末端链接名称
+    std::string end_effector_link_;
 
-    // 规划参数（可根据需求调整）
+    // 关节名称定义（与 URDF 一致）
+    const std::string joint_theta1_ = "turret_to_first_arm";  // theta1
+    const std::string joint_theta2_ = "first_to_second_arm";  // theta2
+    const std::string joint_theta3_ = "second_to_third_arm";  // theta3（同步关节）
+
+    // 规划参数
     const std::string planner_id_ = "PRM";
     const double velocity_scaling_ = 0.1;
     const double acceleration_scaling_ = 0.1;
     const double planning_time_ = 8.0;
     const int planning_attempts_ = 15;
 
-public:
     /**
-     * @brief 构造函数，初始化规划器
-     * @param group_name 规划组名称（如"arm_3joints_group"）
+     * @brief 计算 theta3 = π - theta1 - theta2（确保在限位 0~3.14 内）
      */
-    explicit VerticalConstraintPlanner(const std::string& group_name);
+    double calculateTheta3(double theta1, double theta2);
 
     /**
-     * @brief 执行关节空间运动
-     * @param target_joints 目标关节角度
-     * @return 运动是否成功
+     * @brief 单独执行 theta3 关节运动（与主关节同步）
+     */
+    bool moveTheta3(double target_theta3);
+
+public:
+    /**
+     * @brief 构造函数：初始化主组和 theta3 单独组
+     * @param main_group_name 主规划组（arm_3joints_group）
+     * @param theta3_group_name theta3 单独组（theta3_single_group）
+     */
+    VerticalConstraintPlanner(const std::string& main_group_name, const std::string& theta3_group_name);
+
+    /**
+     * @brief 执行主关节运动 + theta3 同步运动
+     * @param target_joints 主关节目标值：[base_to_turret, theta1, theta2]
      */
     bool moveToJointSpace(const std::vector<double>& target_joints);
 
     /**
-     * @brief 执行绝对位置运动（相对base_link坐标系）
-     * @param x 目标x坐标（建议≤0.6m，3关节臂可达范围）
-     * @param y 目标y坐标（建议≤0.2m，避免底座过度旋转）
-     * @param z 目标z坐标（建议≤0.8m，高度上限）
-     * @return 运动是否成功
+     * @brief 绝对位置运动 + theta3 同步运动
      */
     bool moveToAbsolutePosition(double x, double y, double z);
 
     /**
-     * @brief 返回初始位置
-     * @param home_joints 初始关节角度
-     * @return 运动是否成功
+     * @brief 返回home位置 + theta3 同步
+     * @param home_joints 主关节home值：[base_to_turret, theta1, theta2]
      */
     bool returnToHome(const std::vector<double>& home_joints);
 
     /**
-     * @brief 获取当前末端位置（相对base_link）
-     * @return 末端位置姿态
+     * @brief 获取当前主关节角度（theta1、theta2）
      */
+    std::pair<double, double> getCurrentTheta1Theta2();
+
     geometry_msgs::Pose getCurrentEndEffectorPose();
 };
 

@@ -5,29 +5,27 @@
 int main(int argc, char** argv) {
     ros::init(argc, argv, "vertical_constraint_test");
     ros::NodeHandle nh;
-    ros::AsyncSpinner spinner(1);
+    ros::AsyncSpinner spinner(2);  // 2个线程，分别处理主组和 theta3 组
     spinner.start();
-    ROS_INFO("Starting vertical constraint test...");
+    ROS_INFO("Starting test with theta3 sync...");
 
     try {
-        // 实例化规划器（指定3关节规划组）
-        VerticalConstraintPlanner planner("arm_3joints_group");
+        // 实例化规划器：主组（arm_3joints_group）+ theta3 单独组（theta3_single_group）
+        VerticalConstraintPlanner planner("arm_3joints_group", "theta3_single_group");
 
-        // 1. 执行关节空间运动（安全起点）
-        std::vector<double> target_joints = {0.2, 0.4, -0.6};  // 平缓的初始姿态
+        // 1. 关节空间运动（theta2 设为 0.6，避免超限位）
+        std::vector<double> target_joints = {0.2, 0.4, 0.6};  // [base, theta1=0.4, theta2=0.6]
         planner.moveToJointSpace(target_joints);
 
-        // 2. 执行绝对位置运动（相对base_link，3关节臂安全可达范围）
-        planner.moveToAbsolutePosition(0.35, 0.3, 0.45);  // x=0.35, y=0.0, z=0.45
-        // 可根据需求修改目标，例如：
-        // planner.moveToAbsolutePosition(0.5, 0.1, 0.6);  // 更远处目标（需确保臂长足够）
+        // 2. 绝对位置运动（y=0.0，z=0.7，确保可达）
+        planner.moveToAbsolutePosition(0.35, 0.0, 0.7);
 
-        // 3. 返回初始位置（全零姿态）
+        // 3. 返回 home 位置（theta1=0, theta2=0 → theta3=π≈3.14）
         std::vector<double> home_joints = {0.0, 0.0, 0.0};
         planner.returnToHome(home_joints);
 
     } catch (const std::exception& e) {
-        ROS_ERROR("Test node error: %s", e.what());
+        ROS_ERROR("Test error: %s", e.what());
         return 1;
     }
 
