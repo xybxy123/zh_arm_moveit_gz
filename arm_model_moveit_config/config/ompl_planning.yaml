@@ -194,3 +194,12 @@ arm_model_group:
     - AITstar
     - ABITstar
     - BITstar
+
+arm_3joints_group:
+  default_planner_config: RRTConnect
+  planner_configs:
+    - RRTConnect
+    - RRT
+    - PRM
+  # projection_evaluator: joints(base_to_turret, turret_to_first_arm, first_to_second_arm)
+  # longest_valid_segment_fraction: 0.01

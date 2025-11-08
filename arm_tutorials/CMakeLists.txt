@@ -125,8 +125,8 @@ find_package(Boost REQUIRED system filesystem date_time thread)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  LIBRARIES
-  INCLUDE_DIRS
+  LIBRARIES vertical_constraint  # 声明要生成的库
+  INCLUDE_DIRS include  # 声明头文件目录
   CATKIN_DEPENDS
     moveit_core
     moveit_visual_tools
@@ -180,6 +180,10 @@ include_directories(SYSTEM ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_
   src/move_group_interface.cpp
   src/move_group_test.cpp)
 
+ add_executable(vertical_constraint_test
+  src/vertical_constraint.cpp
+  src/vertical_constraint_test.cpp)
+  
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -195,6 +199,9 @@ include_directories(SYSTEM ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_
    ${catkin_LIBRARIES}
  )
 
+ target_link_libraries(vertical_constraint_test
+   ${catkin_LIBRARIES}
+ )
 #############
 ## Install ##
 #############

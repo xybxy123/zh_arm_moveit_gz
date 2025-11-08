@@ -76,3 +76,50 @@ arm_position_trajectory_controller:
 
   # # 控制周期（与硬件周期匹配，默认10ms）
   # control_period: 0.01
+
+# 3关节专用位置轨迹控制器
+arm_3joints_position_trajectory_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - base_to_turret       # 与SRDF关节顺序一致
+    - turret_to_first_arm
+    - first_to_second_arm
+  joint_interface: hardware_interface/PositionJointInterface  # 位置控制接口（核心修改）
+
+  # 位置控制核心参数：每个关节的PID控制器参数（用于位置跟踪闭环控制）
+  gains:
+    base_to_turret:
+      p: 150.0   # 比例增益足够大，确保驱动力
+      i: 0.5     # 小积分消除静态误差
+      d: 10.0    # 微分抑制震荡
+      i_clamp: 5.0
+    first_to_second_arm:
+      p: 150.0
+      i: 0.5
+      d: 10.0
+      i_clamp: 5.0
+    second_to_third_arm:
+      p: 120.0   # 末端关节负载小，略减小
+      i: 0.3
+      d: 8.0
+      i_clamp: 3.0
+    turret_to_first_arm:
+      p: 150.0
+      i: 0.5
+      d: 10.0
+      i_clamp: 5.0
+  # constraints:
+  #   goal_time: 0.6
+  #   stopped_velocity_tolerance: 0.01
+  #   base_to_turret:
+  #     trajectory: 0.05
+  #     goal: 0.01
+  #   turret_to_first_arm:
+  #     trajectory: 0.05
+  #     goal: 0.01
+  #   first_to_second_arm:
+  #     trajectory: 0.05
+  #     goal: 0.01
+  # stop_trajectory_duration: 0.5
+  # state_publish_rate: 50
+  # action_monitor_rate: 20

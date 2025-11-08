@@ -6,8 +6,12 @@
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
 #include <moveit_msgs/AttachedCollisionObject.h>
 #include <moveit_msgs/CollisionObject.h>
+#include <moveit_msgs/Constraints.h>
+#include <moveit_msgs/OrientationConstraint.h>
 #include <ros/ros.h>
 #include <sensor_msgs/JointState.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
 #include <cmath>
 #include <stdexcept>
@@ -41,13 +45,14 @@ namespace move_group {
         // ---------------------- 逆运动学接口 --------------------------
         bool calculateIK(const geometry_msgs::Pose& target_pose, std::vector<double>& joint_positions, const std::string& tip_link = "");
 
-    private:
+        private:
         ros::NodeHandle nh_;
         ros::AsyncSpinner spinner_;
         std::string PLANNING_GROUP_;
         moveit::planning_interface::MoveGroupInterface move_group_interface_;
         const moveit::core::JointModelGroup* joint_model_group_;
         std::vector<double> current_joint_pos_;
+        bool constraint_enabled_;
 
         // 配置参数
         double velocity_scaling_ = 0.15;

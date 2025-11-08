@@ -3,7 +3,7 @@
 namespace move_group {
 
     MoveGroup::MoveGroup(const std::string& planning_group)
-        : nh_("~"), spinner_(1), PLANNING_GROUP_(planning_group), move_group_interface_(PLANNING_GROUP_) {
+        : nh_("~"), spinner_(1), PLANNING_GROUP_(planning_group), move_group_interface_(PLANNING_GROUP_), constraint_enabled_(false) {
         spinner_.start();
 
         // 检查规划组是否有效

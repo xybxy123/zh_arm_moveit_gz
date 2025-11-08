@@ -184,7 +184,7 @@
     <!-- 关节位于云台上表面，第一连杆下表面与云台上表面连接 -->
     <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit lower="-1.57" upper="1.57" effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <limit lower="0" upper="1.57" effort="${joint_effort}" velocity="${joint_velocity}"/>
     <dynamics damping="${joint_damping}" friction="0.1"/>
   </joint>
 
@@ -231,7 +231,7 @@
     <!-- 关节位于第一连杆上表面 -->
     <origin xyz="0 0 ${first_arm_length}" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit lower="-3.14" upper="3.14" effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <limit lower="0" upper="3.14" effort="${joint_effort}" velocity="${joint_velocity}"/>
     <dynamics damping="${joint_damping}" friction="0.1"/>
   </joint>
 
@@ -278,7 +278,7 @@
     <!-- 关节位于第二连杆上表面 -->
     <origin xyz="0 0 ${second_arm_length}" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit lower="-3.14" upper="3.14" effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <limit lower="0" upper="3.14" effort="${joint_effort}" velocity="${joint_velocity}"/>
     <dynamics damping="${joint_damping}" friction="0.1"/>
   </joint>
 
@@ -330,5 +330,72 @@
       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
     </plugin>
   </gazebo>
+
+
+  <!-- 障碍物：固定立方体（位于机械臂运动路径上，需避障） -->
+  <!-- <link name="obstacle">
+    <inertial>
+      <mass value="10.0"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1.0" ixy="0" ixz="0"
+               iyy="1.0" iyz="0"
+               izz="1.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0.05"/> 
+      <geometry>
+        <box size="0.1 0.1 0.1"/> 
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1"/> 
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.05"/> 
+      <geometry>
+        <box size="0.1 0.1 0.1"/> 
+      </geometry>
+    </collision>
+  </link> -->
+
+  <!-- 障碍物固定到世界坐标系（位置：x=0.3, y=0.1, z=0.2，在机械臂工作空间内） -->
+ <!-- <joint name="obstacle_to_world" type="fixed">
+    <parent link="world"/>
+    <child link="obstacle"/>
+    <origin xyz="0 0.2 0.3" rpy="0 0 0"/> 
+  </joint> -->
+
+
+<!-- 新增：虚拟末端链接（second_arm_link 的终点） -->
+<link name="second_arm_end">
+  <!-- 无惯性（质量为0，不影响动力学） -->
+  <inertial>
+    <mass value="0.0"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0"
+             iyy="0.0" iyz="0.0"
+             izz="0.0"/>
+  </inertial>
+  <!-- 可视化（可选，小原点标记终点，方便观察） -->
+  <visual>
+    <geometry>
+      <sphere radius="0.005"/> <!-- 小原点，颜色为红色 -->
+    </geometry>
+    <material name="red"/>
+  </visual>
+  <!-- 无碰撞体（不影响避障） -->
+  <collision>
+    <geometry>
+      <sphere radius="0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<!-- 新增：固定关节，将虚拟末端链接到 second_arm_link 的终点 -->
+<joint name="second_arm_to_end" type="fixed">
+  <parent link="second_arm_link"/>
+  <child link="second_arm_end"/>
+  <origin xyz="0 0 ${second_arm_length}" rpy="0 0 0"/> <!-- 沿 Z 轴平移到 second_arm_link 的终点 -->
+</joint>
+
 
 </robot>
