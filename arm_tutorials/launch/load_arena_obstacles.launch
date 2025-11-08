@@ -1,0 +1,9 @@
+<launch> 
+
+  <!-- 启动 C++ 节点加载场地障碍物 -->
+<node name="load_arena_obstacles"
+      pkg="arm_tutorials"
+      type="load_arena_obstacles"
+      output="screen" />
+
+</launch>

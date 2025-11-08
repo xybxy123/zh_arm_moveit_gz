@@ -127,7 +127,7 @@ bool VerticalConstraintPlanner::returnToHome(const std::vector<double>& home_joi
 
     double theta1 = home_joints[1];
     double theta2 = home_joints[2];
-    double theta3 = calculateTheta3(theta1, theta2);
+    double theta3 = 0;
 
     move_group_main_.setJointValueTarget(home_joints);
     moveit::planning_interface::MoveGroupInterface::Plan main_plan;

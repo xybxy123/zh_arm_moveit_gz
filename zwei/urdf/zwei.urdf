@@ -5,7 +5,7 @@
 <robot
   name="zwei">
   <link
-    name="base_link">
+    name="arena_base_link">
     <inertial>
       <origin
         xyz="6.025 7.59901863606395 0.159497471230316"
@@ -26,7 +26,7 @@
         rpy="0 0 0" />
       <!--<geometry>
         <mesh
-          filename="package://zwei/meshes/base_link.STL" />
+          filename="package://zwei/meshes/arena_base_link.STL" />
       </geometry>-->
       <!--<material
         name="">
@@ -40,7 +40,7 @@
         rpy="0 0 0" />
       <!--<geometry>
         <mesh
-          filename="package://zwei/meshes/base_link.STL" />
+          filename="package://zwei/meshes/arena_base_link.STL" />
       </geometry>-->
     </collision>
   </link>
@@ -91,7 +91,7 @@
       xyz="9.05 3.8 0.00980000000000023"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link1" />
     <axis
@@ -144,7 +144,7 @@
       xyz="10.25 3.8 0.00980000000000023"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link2" />
     <axis
@@ -197,7 +197,7 @@
       xyz="7.85 5 0.00980000000000031"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link3" />
     <axis
@@ -251,7 +251,7 @@
       xyz="6.025 10.75 -0.0401999999999993"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link4" />
     <axis
@@ -305,7 +305,7 @@
       xyz="6.025 10.75 -0.0401999999999993"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link5" />
     <axis
@@ -358,7 +358,7 @@
       xyz="10.55 9.3 0.00980000000000057"
       rpy="1.5707963267949 0 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link6" />
     <axis
@@ -411,7 +411,7 @@
       xyz="4.25 9.65 0.409800000000001"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link7" />
     <axis
@@ -464,7 +464,7 @@
       xyz="6.025 9.45 0.399800000000001"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link8" />
     <axis
@@ -517,7 +517,7 @@
       xyz="11.55 11.5 0.409800000000001"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link9" />
     <axis
@@ -570,7 +570,7 @@
       xyz="0.500000000000001 11.5 0.409800000000001"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link10" />
     <axis
@@ -623,7 +623,7 @@
       xyz="6.025 9.44 0.4598"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link11" />
     <axis
@@ -676,7 +676,7 @@
       xyz="9.0625 0.975000000000001 -0.0401999999999999"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link12" />
     <axis
@@ -732,7 +732,7 @@
       xyz="2.9875 0.975000000000001 -0.0401999999999999"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link13" />
     <axis
@@ -785,7 +785,7 @@
       xyz="6.025 0.950000000000001 0.00980000000000006"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link14" />
     <axis
@@ -838,7 +838,7 @@
       xyz="9.45 0.16 0.01"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link15" />
     <axis
@@ -891,7 +891,7 @@
       xyz="9.0625 5.725 -0.0401999999999996"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link16" />
     <axis
@@ -944,7 +944,7 @@
       xyz="2.9875 5.725 -0.0401999999999996"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link17" />
     <axis
@@ -997,7 +997,7 @@
       xyz="6.025 1.97 0.00980000000000012"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link18" />
     <axis
@@ -1057,7 +1057,7 @@
       xyz="1.625 5 0.3748"
       rpy="1.5707963267949 1.5707963267949 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link19" />
     <axis
@@ -1115,7 +1115,7 @@
       xyz="3 3.8 0.1998"
       rpy="1.5707963267949 0 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link20" />
     <axis
@@ -1169,7 +1169,7 @@
       xyz="1.8 6.2 0.7498"
       rpy="-1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link21" />
     <axis
@@ -1219,7 +1219,7 @@
       xyz="1.8 3.8 0.4098"
       rpy="1.5707963267949 0 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link22" />
     <axis
@@ -1273,7 +1273,7 @@
       xyz="10.25 3.8 0.4098"
       rpy="1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link23" />
     <axis
@@ -1327,7 +1327,7 @@
       xyz="1.8 3.8 0.4098"
       rpy="1.5707963267949 0 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link25" />
     <axis
@@ -1380,7 +1380,7 @@
       xyz="3 3.8 0.2098"
       rpy="1.5707963267949 0 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link26" />
     <axis
@@ -1433,7 +1433,7 @@
       xyz="4.2 3.8 0.399800000000001"
       rpy="1.5707963267949 0 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link27" />
     <axis
@@ -1486,7 +1486,7 @@
       xyz="1.635 5 0.3748"
       rpy="1.5707963267949 1.5707963267949 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link28" />
     <axis
@@ -1539,7 +1539,7 @@
       xyz="3.165 5 0.5748"
       rpy="1.5707963267949 -1.5707963267949 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link29" />
     <axis
@@ -1592,7 +1592,7 @@
       xyz="4.025 5 0.7748"
       rpy="1.5707963267949 1.5707963267949 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link30" />
     <axis
@@ -1645,7 +1645,7 @@
       xyz="1.8 6.2 0.7398"
       rpy="-1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link31" />
     <axis
@@ -1698,7 +1698,7 @@
       xyz="3 6.2 0.9498"
       rpy="-1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link32" />
     <axis
@@ -1751,7 +1751,7 @@
       xyz="4.375 6.2 0.5748"
       rpy="1.5707963267949 -1.5707963267949 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link33" />
     <axis
@@ -1804,7 +1804,7 @@
       xyz="1.8 7.4 0.199800000000001"
       rpy="1.5707963267949 0 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link34" />
     <axis
@@ -1857,7 +1857,7 @@
       xyz="2.825 7.4 0.5748"
       rpy="1.5707963267949 1.5707963267949 0" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link35" />
     <axis
@@ -1910,7 +1910,7 @@
       xyz="4.2 7.4 0.549800000000001"
       rpy="-1.5707963267949 0 3.14159265358979" />
     <parent
-      link="base_link" />
+      link="arena_base_link" />
     <child
       link="Link36" />
     <axis
@@ -1918,7 +1918,7 @@
   </joint>
 
 
-  <!--<gazebo reference="base_link">
+  <!--<gazebo reference="arena_base_link">
   <material>Gazebo/WoodFloor</material>
   </gazebo>
   <gazebo reference="Link1">
@@ -1976,7 +1976,7 @@
   <material>Gazebo/WoodPallet</material>
   </gazebo>-->
 
-  <gazebo reference="base_link">
+  <gazebo reference="arena_base_link">
   <material>Gazebo/WoodFloor</material>
   </gazebo>
   <gazebo reference="Link1">

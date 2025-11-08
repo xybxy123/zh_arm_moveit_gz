@@ -93,7 +93,7 @@
   <joint name="world_to_base_fixed" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
-    <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+    <origin xyz="3 4.495 0.68" rpy="0 0 0"/>
   </joint>
 
 
@@ -362,7 +362,7 @@
  <!-- <joint name="obstacle_to_world" type="fixed">
     <parent link="world"/>
     <child link="obstacle"/>
-    <origin xyz="0 0.2 0.3" rpy="0 0 0"/> 
+    <origin xyz="0 0.3 0.4" rpy="0 0 0"/> 
   </joint> -->
 
 
@@ -397,5 +397,18 @@
   <origin xyz="0 0 ${second_arm_length}" rpy="0 0 0"/> <!-- 沿 Z 轴平移到 second_arm_link 的终点 -->
 </joint>
 
+
+
+
+
+
+  <!-- 引入场地模型（zwei.urdf） -->
+  <!-- <xacro:include filename="$(find zwei)/urdf/zwei.urdf" />
+
+  <joint name="arena_to_world" type="fixed">
+    <parent link="world" />
+    <child link="arena_base_link" /> 
+    <origin xyz="0 0 0.05" rpy="0 0 0" /> 
+  </joint> -->
 
 </robot>

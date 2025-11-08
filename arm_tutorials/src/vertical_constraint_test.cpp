@@ -14,11 +14,16 @@ int main(int argc, char** argv) {
         VerticalConstraintPlanner planner("arm_3joints_group", "theta3_single_group");
 
         // 1. 关节空间运动（theta2 设为 0.6，避免超限位）
-        std::vector<double> target_joints = {0.2, 0.4, 0.6};  // [base, theta1=0.4, theta2=0.6]
+        std::vector<double> target_joints = {0.2, 0.4, 0.6};
         planner.moveToJointSpace(target_joints);
 
         // 2. 绝对位置运动（y=0.0，z=0.7，确保可达）
-        planner.moveToAbsolutePosition(0.35, 0.0, 0.7);
+        planner.moveToAbsolutePosition(3, 3.8, 0.70);
+        ros::Duration(3.0).sleep();
+
+        // planner.moveToAbsolutePosition(-0.2, 0.3, 0.4);
+
+        // planner.moveToAbsolutePosition(0.2, -0.3, 0.4);
 
         // 3. 返回 home 位置（theta1=0, theta2=0 → theta3=π≈3.14）
         std::vector<double> home_joints = {0.0, 0.0, 0.0};

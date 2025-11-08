@@ -184,6 +184,9 @@ include_directories(SYSTEM ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_
   src/vertical_constraint.cpp
   src/vertical_constraint_test.cpp)
   
+
+  # add_executable(load_arena_obstacles src/load_arena_obstacles.cpp)
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -202,6 +205,10 @@ include_directories(SYSTEM ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_
  target_link_libraries(vertical_constraint_test
    ${catkin_LIBRARIES}
  )
+
+#  target_link_libraries(load_arena_obstacles
+#   ${catkin_LIBRARIES}
+# )
 #############
 ## Install ##
 #############

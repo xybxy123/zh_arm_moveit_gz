@@ -5,5 +5,7 @@
     <!-- <include file="$(find arm_tutorials)/launch/move_group_interface.launch"/>  -->
         
   <include file="$(find arm_tutorials)/launch/vertical_constraint_test.launch"/> 
+  
+  <!-- <include file="$(find arm_tutorials)/launch/load_arena_obstacles.launch"/>  -->
 
 </launch>

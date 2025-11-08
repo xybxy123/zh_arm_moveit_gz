@@ -25,9 +25,9 @@ private:
     const std::string joint_theta3_ = "second_to_third_arm";  // theta3（同步关节）
 
     // 规划参数
-    const std::string planner_id_ = "PRM";
-    const double velocity_scaling_ = 0.1;
-    const double acceleration_scaling_ = 0.1;
+    const std::string planner_id_ = "RRTConnect";
+    const double velocity_scaling_ = 0.8;
+    const double acceleration_scaling_ = 0.8;
     const double planning_time_ = 8.0;
     const int planning_attempts_ = 15;
 
