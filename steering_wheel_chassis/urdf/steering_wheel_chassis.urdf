@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="steering_wheel_chassis">
+  <link
+    name="base_link">
+    <inertial>   
+      <origin xyz="0.00379064387309337 -0.0291020965539023 0.253749437559756" rpy="0 0 0" />
+      <mass     
+        value="14.5660223494718" />
+      <inertia
+        ixx="0.0750391320286282"
+        ixy="1.19976113983499E-05"
+        ixz="-2.31872165746839E-05"
+        iyy="0.0884241949762676"  
+        iyz="0.00374287067138457"
+        izz="0.135755295578756" />      
+    </inertial>      
+
+  
+
+    <visual>   
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="L_F_W_Link">
+    <inertial>
+      <origin
+        xyz="-0.0018748 -1.957E-10 3.0517E-11"
+        rpy="0 0 0" />
+      <mass
+        value="0.20474" />
+      <inertia
+        ixx="0.00031536"
+        ixy="-2.1224E-13"
+        ixz="-4.3282E-14"
+        iyy="0.00017615"
+        iyz="-4.7786E-10"
+        izz="0.00017614" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_F_W_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_F_W_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2L_F_W_Link"
+    type="continuous">
+    <origin
+      xyz="-0.22765 0.1894 0.02964"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="L_F_W_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="L_B_W_Link">
+    <inertial>
+      <origin
+        xyz="-0.0018748 -1.9128E-10 5.1851E-11"
+        rpy="0 0 0" />
+      <mass
+        value="0.20474" />
+      <inertia
+        ixx="0.00031536"
+        ixy="-2.1571E-13"
+        ixz="-1.9731E-14"
+        iyy="0.00017615"
+        iyz="-6.3302E-10"
+        izz="0.00017615" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_B_W_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_B_W_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2L_B_W_Link"
+    type="continuous">
+    <origin
+      xyz="-0.22765 -0.18826 0.02964"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="L_B_W_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="R_F_W_Link">
+    <inertial>
+      <origin
+        xyz="-0.00187479075409827 -1.95699678684491E-10 3.05170645698016E-11"
+        rpy="0 0 0" />
+      <mass
+        value="0.2047432331618" />
+      <inertia
+        ixx="0.000315362334766743"
+        ixy="-2.12238388591583E-13"
+        ixz="-4.32816140724435E-14"
+        iyy="0.000176146463533313"
+        iyz="-4.77864297967598E-10"
+        izz="0.000176144935585536" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_F_W_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_F_W_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2R_F_W_Link"
+    type="continuous">
+    <origin
+      xyz="0.22765 0.1894 0.02964"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="R_F_W_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="R_B_W_Link">
+    <inertial>
+      <origin
+        xyz="-0.00187479075411312 -1.91278548555829E-10 5.18504891799942E-11"
+        rpy="0 0 0" />
+      <mass
+        value="0.204743233161155" />
+      <inertia
+        ixx="0.000315362334766726"
+        ixy="-2.15706763411743E-13"
+        ixz="-1.97307278691685E-14"
+        iyy="0.000176146340885705"
+        iyz="-6.33017362908801E-10"
+        izz="0.000176145058233087" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_B_W_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_B_W_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2R_B_W_Link"
+    type="continuous">
+    <origin
+      xyz="0.22765 -0.18826 0.02964"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="R_B_W_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="L_F_S_Link">
+    <inertial>
+      <origin
+        xyz="0.00104361634505801 -0.00037354079513599 -0.0552952177436176"
+        rpy="0 0 0" />
+      <mass
+        value="0.0964448622609274" />
+      <inertia
+        ixx="0.000364314510716357"
+        ixy="4.01641789486163E-20"
+        ixz="6.81696995769619E-19"
+        iyy="0.000353889855493755"
+        iyz="-2.31632799532792E-06"
+        izz="1.1019632250929E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_F_S_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_F_S_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2L_F_S_Link"
+    type="continuous">
+    <origin
+      xyz="-0.1276 0.22 0.0535"
+      rpy="3.14 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="L_F_S_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+
+<!-- <joint name="base2L_F_S_Link" type="fixed">
+    <parent link="base_link"/>
+    <child link="L_F_S_Link"/>
+    <origin xyz="-0.1276 0.22 0.0535" rpy="3.14 0 0"/>
+</joint> -->
+
+  <link
+    name="L_F_sW_Link">
+    <inertial>
+      <origin
+        xyz="-8.60422844084496E-16 -2.77555756156289E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.000678584013175396" />
+      <inertia
+        ixx="1.98485823853803E-08"
+        ixy="-6.14085318538162E-24"
+        ixz="1.3397581788759E-23"
+        iyy="1.0829069876924E-08"
+        iyz="1.31466720117247E-25"
+        izz="1.0829069876924E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_F_sW_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_F_sW_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base3L_F_sW_Link"
+    type="continuous">
+    <origin
+      xyz="0 -0.00182391384976394 -0.26999383944503"
+      rpy="0 0 0" />
+    <parent
+      link="L_F_S_Link" />
+    <child
+      link="L_F_sW_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="L_B_S_Link">
+    <inertial>
+      <origin
+        xyz="0.00104361634505815 -0.000610645150039724 -0.0552931076223831"
+        rpy="0 0 0" />
+      <mass
+        value="0.096444862260927" />
+      <inertia
+        ixx="0.000364314510716517"
+        ixy="4.12520596189392E-20"
+        ixz="3.43652137954245E-19"
+        iyy="0.000353863686252314"
+        iyz="-3.78646856691212E-06"
+        izz="1.10458014925037E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_B_S_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_B_S_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2L_B_S_Link"
+    type="continuous">
+    <origin
+      xyz="-0.1276 -0.22 0.0535"
+      rpy="3.14 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="L_B_S_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+
+<!-- <joint name="base2L_B_S_Link" type="fixed">
+    <parent link="base_link"/>
+    <child link="L_B_S_Link"/>
+    <origin xyz="-0.1276 -0.22 0.0535" rpy="3.14 0 0"/>
+</joint> -->
+
+  <link
+    name="L_B_sW_Link">
+    <inertial>
+      <origin
+        xyz="-8.32667268468867E-16 -2.77555756156289E-17 2.77555756156289E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.000678584013175396" />
+      <inertia
+        ixx="1.98485823853803E-08"
+        ixy="-5.17475777298972E-26"
+        ixz="-1.04096471623317E-25"
+        iyy="1.0829069876924E-08"
+        iyz="-2.9720997247362E-25"
+        izz="1.0829069876924E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_B_sW_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/L_B_sW_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base3L_B_sW_Link"
+    type="continuous">
+    <origin
+      xyz="0 -0.00298163991979752 -0.269983536208023"
+      rpy="0 0 0" />
+    <parent
+      link="L_B_S_Link" />
+    <child
+      link="L_B_sW_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="R_F_S_Link">
+    <inertial>
+      <origin
+        xyz="-0.00104361634505881 0.000242848153632458 -0.0552959461698061"
+        rpy="0 0 0" />
+      <mass
+        value="0.0964448622609276" />
+      <inertia
+        ixx="0.000364314510716486"
+        ixy="-1.74826101896979E-21"
+        ixz="-1.62601093484205E-19"
+        iyy="0.000353898889500792"
+        iyz="1.50592222981448E-06"
+        izz="1.10105982439404E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_F_S_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_F_S_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2R_F_S_Link"
+    type="continuous">
+    <origin
+      xyz="0.1276 0.22 0.0535"
+      rpy="3.14 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="R_F_S_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+
+<!-- <joint name="base2R_F_S_Link" type="fixed">
+    <parent link="base_link"/>
+    <child link="R_F_S_Link"/>
+    <origin xyz="0.1276 0.22 0.0535" rpy="3.14 0 0"/>
+</joint> -->
+
+  <link
+    name="R_F_sW_Link">
+    <inertial>
+      <origin
+        xyz="8.60422844084496E-16 -2.77555756156289E-17 5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.000678584013175396" />
+      <inertia
+        ixx="1.98485823853803E-08"
+        ixy="-1.40965457779292E-24"
+        ixz="5.31375925972952E-25"
+        iyy="1.0829069876924E-08"
+        iyz="4.49478218391369E-26"
+        izz="1.0829069876924E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_F_sW_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_F_sW_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base3R_F_sW_Link"
+    type="continuous">
+    <origin
+      xyz="0 0.00118577171908929 -0.269997396182687"
+      rpy="0 0 0" />
+    <parent
+      link="R_F_S_Link" />
+    <child
+      link="R_F_sW_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="R_B_S_Link">
+    <!-- <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.096444862260927" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial> -->
+      <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <mass value="0.096444862260927" />
+    <inertia
+      ixx="0.0001"
+      ixy="0"
+      ixz="0"
+      iyy="0.0001"
+      iyz="0"
+      izz="0.0001" />
+  </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_B_S_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_B_S_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2R_B_S_Link"
+    type="continuous">
+    <origin
+      xyz="0.1276 -0.220000000000001 0.0534999999999991"
+      rpy="3.14 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="R_B_S_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+
+<!-- <joint name="base2R_B_S_Link" type="fixed">
+    <parent link="base_link"/>
+    <child link="R_B_S_Link"/>
+    <origin xyz="0.1276 -0.220000000000001 0.0534999999999991" rpy="3.14 0 0"/>
+</joint> -->
+
+  <link
+    name="R_B_sW_Link">
+    <inertial>
+      <origin
+        xyz="8.60422844084496E-16 2.77555756156289E-17 2.77555756156289E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.000678584013175396" />
+      <inertia
+        ixx="1.98485823853803E-08"
+        ixy="-2.40982926167371E-25"
+        ixz="5.41825753859784E-25"
+        iyy="1.0829069876924E-08"
+        iyz="3.37422945978167E-25"
+        izz="1.0829069876924E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_B_sW_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://steering_wheel_chassis/meshes/R_B_sW_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base3R_B_sW_Link"
+    type="continuous">
+    <origin
+      xyz="0 0.00130574974081185 -0.26999684260675"
+      rpy="0 0 0" />
+    <parent
+      link="R_B_S_Link" />
+    <child
+      link="R_B_sW_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+
+
+
+
+
+
+
+</robot>

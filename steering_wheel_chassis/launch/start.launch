@@ -1,0 +1,60 @@
+<launch>
+    <!-- 1. 正确加载URDF（通过xacro生成，确保路径正确） -->
+    <param name="robot_description" 
+        command="$(find xacro)/xacro '$(find steering_wheel_chassis)/urdf/steering_wheel__robot.xacro'" />
+
+    <!-- 加载台阶URDF到另一个参数 -->
+    <param name="stair_description" command="$(find xacro)/xacro '$(find steering_wheel_chassis)/urdf/stair.urdf'" />
+
+    <!-- 2. 加载控制器配置（若需要控制轮子，必须保留） -->
+    <rosparam file="$(find steering_wheel_chassis)/config/controllers.yaml" command="load" />
+
+    <!-- 3. 生成模型：使用与正常launch接近的初始高度z=0.3，避免初始碰撞问题 -->
+    <node 
+        pkg="gazebo_ros" 
+        type="spawn_model" 
+        name="spawn_model" 
+        output="screen"
+        args="-urdf -model steering_wheel_chassis -param robot_description -z 0.05" /> <!-- 模型名与正常launch保持一致，z值调整为0.3 -->
+
+    <!-- 生成台阶模型（独立模型） -->
+    <!-- <node name="spawn_stair" pkg="gazebo_ros" type="spawn_model" 
+          args="-urdf -param stair_description -model heavy_stair -x 0 -y 5 -z 0" /> -->
+
+    <!-- 4. 启动Gazebo，先暂停物理引擎（与正常launch一致，方便观察初始状态） -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="false"/> <!-- 先暂停，确认模型位置正常后再手动启动物理引擎 -->
+        <arg name="world_name" value="$(find steering_wheel_chassis)/worlds/inertial_test.world"/>
+    </include>
+
+
+    <!-- 6. 启用控制器加载（若需要控制轮子转动，必选） -->
+    <node 
+        name="controller_spawner" 
+        pkg="controller_manager"
+        type="spawner"
+        output="screen"
+        args="joint_state_controller 
+              left_front_wheel_controller 
+              left_back_wheel_controller 
+              right_front_wheel_controller 
+              right_back_wheel_controller
+              left_front_steer_controller
+              left_back_steer_controller
+              right_front_steer_controller
+              right_back_steer_controller" />
+
+    <!-- 7. 可选：添加base_footprint的TF（与正常launch一致，增强兼容性） -->
+    <node
+        name="tf_footprint_base"
+        pkg="tf"
+        type="static_transform_publisher"
+        args="0 0 0 0 0 0 base_link base_footprint 40" />
+
+    <!-- 8. 可选：发布校准信号（部分控制器需要） -->
+    <node
+        name="fake_joint_calibration"
+        pkg="rostopic"
+        type="rostopic"
+        args="pub /calibrated std_msgs/Bool true" />
+</launch>

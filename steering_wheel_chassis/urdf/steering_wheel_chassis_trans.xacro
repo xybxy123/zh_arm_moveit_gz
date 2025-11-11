@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="steering_wheel_transmissions" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find steering_wheel_chassis)/urdf/transmission.xacro"/>
+
+    <!-- 车轮关节（速度控制） -->
+    <xacro:effort_joint_trans 
+        name="base2L_F_W_Link" 
+        max_effort="10.0" 
+        max_vel="15.0" 
+        max_accel="2" />
+
+    <xacro:effort_joint_trans 
+        name="base2L_B_W_Link" 
+        max_effort="10.0" 
+        max_vel="15.0" 
+        max_accel="2" />
+
+    <xacro:effort_joint_trans 
+        name="base2R_F_W_Link" 
+        max_effort="10.0" 
+        max_vel="15.0" 
+        max_accel="2" />
+
+    <xacro:effort_joint_trans 
+        name="base2R_B_W_Link" 
+        max_effort="10.0" 
+        max_vel="15.0" 
+        max_accel="2" />
+
+    <!-- 转向关节（位置控制）- 关键修改 -->
+    <xacro:position_joint_trans 
+        name="base2L_F_S_Link" 
+        max_effort="8.0"      
+        max_vel="1.0"          
+        max_accel="1.0"         
+        min_position="-0.5"    
+        max_position="0.5" />
+
+    <xacro:position_joint_trans 
+        name="base2L_B_S_Link" 
+        max_effort="8.0" 
+        max_vel="1.0" 
+        max_accel="1.0" 
+        min_position="-0.5" 
+        max_position="0.5" />
+
+    <xacro:position_joint_trans 
+        name="base2R_F_S_Link" 
+        max_effort="8.0" 
+        max_vel="1.0" 
+        max_accel="1.0" 
+        min_position="-0.5" 
+        max_position="0.5" />
+
+    <xacro:position_joint_trans 
+        name="base2R_B_S_Link" 
+        max_effort="8.0" 
+        max_vel="1.0" 
+        max_accel="1.0" 
+        min_position="-0.5" 
+        max_position="0.5" />
+
+
+
+    <xacro:effort_joint_trans 
+        name="base3L_F_sW_Link" 
+        max_effort="99.0" 
+        max_vel="99.0" 
+        max_accel="99.0" />
+
+    <xacro:effort_joint_trans 
+        name="base3L_B_sW_Link" 
+        max_effort="99.0" 
+        max_vel="99.0" 
+        max_accel="99.0" />
+
+    <xacro:effort_joint_trans 
+        name="base3R_F_sW_Link" 
+        max_effort="99.0" 
+        max_vel="99.0" 
+        max_accel="99.0" />
+
+    <xacro:effort_joint_trans 
+        name="base3R_B_sW_Link" 
+        max_effort="99.0" 
+        max_vel="99.0" 
+        max_accel="99.0" />
+
+
+
+</robot>

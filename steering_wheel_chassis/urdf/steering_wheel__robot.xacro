@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 主机器人模型文件，整合所有模块 -->
+<robot name="steering_wheel_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+    <!-- 引入机器人本体URDF模型 -->
+    <xacro:include filename="$(find steering_wheel_chassis)/urdf/steering_wheel_chassis.urdf"/>
+
+    <!-- 引入车轮关节传动配置 -->
+    <xacro:include filename="$(find steering_wheel_chassis)/urdf/steering_wheel_chassis_trans.xacro"/>
+
+
+
+
+    <gazebo>
+        <!-- 加载 gazebo_ros_control 插件，连接 Gazebo 与 ros_control -->
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/</robotNamespace>  <!-- 命名空间（默认根目录） -->
+            <controlPeriod>0.001</controlPeriod>  <!-- 控制周期（与 Gazebo 步长一致） -->
+        </plugin>
+    </gazebo>
+
+
+
+</robot>

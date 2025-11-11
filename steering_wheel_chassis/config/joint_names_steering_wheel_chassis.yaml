@@ -1,0 +1,1 @@
+controller_joint_names: ['', 'base2L_F_W_Link', 'base2L_B_W_Link', 'base2R_F_W_Link', 'base2R_B_W_Link', 'base2L_F_S_Link', 'base3L_F_sW_Link', 'base2L_B_S_Link', 'base3L_B_sW_Link', 'base2R_F_S_Link', 'base3R_F_sW_Link', 'base2R_B_S_Link', 'base3R_B_sW_Link', ]

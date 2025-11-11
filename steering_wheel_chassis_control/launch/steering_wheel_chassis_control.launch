@@ -1,0 +1,14 @@
+<launch>   
+
+<param name="~wheel_radius" value="0.102"/>  <!-- 实际车轮半径 -->
+<param name="~wheel_base" value="0.640"/>    <!-- 实际轮距 -->
+
+ <include file="$(find steering_wheel_chassis)/launch/start.launch"></include>
+
+<!-- <node name="test_" pkg="steering_wheel_chassis_control" type="test_" output="screen"> -->
+
+<node name="example" pkg="steering_wheel_chassis_control" type="example" output="screen">
+  
+</node>
+
+</launch>   

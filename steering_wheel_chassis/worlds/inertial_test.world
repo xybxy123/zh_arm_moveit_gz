@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <world name="inertial_test">
+    
+    <!-- 物理引擎设置 - 平衡惯性稳定性 -->
+    <physics name="inertial_physics" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <max_contacts>50</max_contacts>
+      
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>80</iters>
+          <sor>1.3</sor>
+        </solver>
+        
+        <constraints>
+          <cfm>0.00001</cfm>  <!-- 增加约束力混合 -->
+          <erp>0.8</erp>      <!-- 增加误差减少参数 -->
+          <contact_max_correcting_vel>100.0</contact_max_correcting_vel>  <!-- 适中 -->
+          <contact_surface_layer>0.001</contact_surface_layer>
+        </constraints>
+      </ode>
+    </physics>
+
+    <!-- 重力 - 确保正常工作 -->
+    <gravity>0 0 -9.8</gravity>
+
+    <!-- 环境 -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    
+    <!-- 地面 -->
+    <include>
+      <uri>model://ground_plane</uri>
+      <name>ground_plane</name>
+    </include>
+
+  </world>
+</sdf>
