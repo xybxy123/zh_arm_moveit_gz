@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="stee_new">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.0049353145677922 -0.0173908043079384 0.042668507758924"
+        rpy="0 0 0" />
+      <mass
+        value="9.11525644204073" />
+      <inertia
+        ixx="0.0662797601616749"
+        ixy="8.82781584157839E-05"
+        ixz="-3.8514440935953E-07"
+        iyy="0.0467572894033259"
+        iyz="-4.73012423153271E-06"
+        izz="0.103690871513037" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="L_F_wheel_Link">
+    <inertial>
+      <origin
+        xyz="-0.0031094 -1.9429E-16 -4.5103E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.14684" />
+      <inertia
+        ixx="0.00029453"
+        ixy="-9.7583E-20"
+        ixz="1.0674E-19"
+        iyy="0.00016408"
+        iyz="2.1925E-20"
+        izz="0.00016408" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_F_wheel_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_F_wheel_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2L_F_W_Link"
+    type="continuous">
+    <origin
+      xyz="-0.23 0.185 0.0295"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="L_F_wheel_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="L_B_wheel_Link">
+    <inertial>
+      <origin
+        xyz="-0.0031094 -2.498E-16 -5.2042E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.14684" />
+      <inertia
+        ixx="0.00029453"
+        ixy="-6.4277E-20"
+        ixz="1.3221E-19"
+        iyy="0.00016408"
+        iyz="6.0191E-21"
+        izz="0.00016408" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_B_wheel_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_B_wheel_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2L_B_W_Link"
+    type="continuous">
+    <origin
+      xyz="-0.23 -0.185 0.0295"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="L_B_wheel_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="R_F_wheel_Link">
+    <inertial>
+      <origin
+        xyz="0.0031094 1.6653E-16 -5.2042E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.14684" />
+      <inertia
+        ixx="0.00029453"
+        ixy="-6.0097E-20"
+        ixz="-1.338E-19"
+        iyy="0.00016408"
+        iyz="-2.4027E-20"
+        izz="0.00016408" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_F_wheel_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.29804 0.29804 0.29804 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_F_wheel_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2R_F_W_Link"
+    type="continuous">
+    <origin
+      xyz="0.23 0.185 0.0295"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="R_F_wheel_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="R_B_wheel_Link">
+    <inertial>
+      <origin
+        xyz="-0.001729 1.4003E-10 4.1476E-10"
+        rpy="0 0 0" />
+      <mass
+        value="0.093341" />
+      <inertia
+        ixx="0.00013694"
+        ixy="-1.3659E-13"
+        ixz="-1.6812E-13"
+        iyy="7.4816E-05"
+        iyz="3.5347E-10"
+        izz="7.4817E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_B_wheel_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.29804 0.29804 0.29804 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_B_wheel_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2R_B_W_Link"
+    type="continuous">
+    <origin
+      xyz="0.23 -0.185 0.0295"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="R_B_wheel_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="L_F_ST_Link">
+    <inertial>
+      <origin
+        xyz="-0.001288 0.00044576 0.055763"
+        rpy="0 0 0" />
+      <mass
+        value="0.28023" />
+      <inertia
+        ixx="0.0011051"
+        ixy="4.9518E-20"
+        ixz="1.6272E-18"
+        iyy="0.00104"
+        iyz="-7.7843E-06"
+        izz="6.631E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_F_ST_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_F_ST_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2L_F_S_Link"
+    type="continuous">
+    <origin
+      xyz="-0.124 0.22 0.0535"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="L_F_ST_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="L_F_S_wheel_Link">
+    <inertial>
+      <origin
+        xyz="0 2.7756E-17 5.5511E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.0012284" />
+      <inertia
+        ixx="6.28E-08"
+        ixy="-1.058E-23"
+        ixz="5.0538E-23"
+        iyy="3.3038E-08"
+        iyz="-1.9009E-26"
+        izz="3.3038E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_F_S_wheel_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_F_S_wheel_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base3L_F_sW_Link"
+    type="continuous">
+    <origin
+      xyz="0 0.0021583 0.26999"
+      rpy="0 0 0" />
+    <parent
+      link="L_F_ST_Link" />
+    <child
+      link="L_F_S_wheel_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="L_B_ST_Link">
+    <inertial>
+      <origin
+        xyz="-0.001288 8.3101E-05 0.055764"
+        rpy="0 0 0" />
+      <mass
+        value="0.28023" />
+      <inertia
+        ixx="0.0011051"
+        ixy="-1.3052E-20"
+        ixz="1.6788E-18"
+        iyy="0.0010401"
+        iyz="-1.4512E-06"
+        izz="6.625E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_B_ST_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_B_ST_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2L_B_S_Link"
+    type="continuous">
+    <origin
+      xyz="-0.124 -0.22 0.0535"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="L_B_ST_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="L_B_S_wheel_Link">
+    <inertial>
+      <origin
+        xyz="-1.3878E-17 -2.7756E-17 5.5511E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.0012284" />
+      <inertia
+        ixx="6.28E-08"
+        ixy="-1.0565E-23"
+        ixz="5.1286E-23"
+        iyy="3.3038E-08"
+        iyz="-2.4326E-26"
+        izz="3.3038E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_B_S_wheel_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/L_B_S_wheel_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base3L_B_sW_Link"
+    type="continuous">
+    <origin
+      xyz="0 0.00040236 0.27"
+      rpy="0 0 0" />
+    <parent
+      link="L_B_ST_Link" />
+    <child
+      link="L_B_S_wheel_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="R_F_ST_Link">
+    <inertial>
+      <origin
+        xyz="0.001288 0.00044576 0.055763"
+        rpy="0 0 0" />
+      <mass
+        value="0.28023" />
+      <inertia
+        ixx="0.0011051"
+        ixy="-4.2243E-22"
+        ixz="-2.9525E-20"
+        iyy="0.00104"
+        iyz="-7.7843E-06"
+        izz="6.631E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_F_ST_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_F_ST_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2R_F_S_Link"
+    type="continuous">
+    <origin
+      xyz="0.124 0.22 0.0535"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="R_F_ST_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="R_F_S_wheel_Link">
+    <inertial>
+      <origin
+        xyz="0 2.7756E-17 5.5511E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.0012284" />
+      <inertia
+        ixx="6.28E-08"
+        ixy="-3.5104E-25"
+        ixz="-4.0239E-24"
+        iyy="3.3038E-08"
+        iyz="-1.9649E-26"
+        izz="3.3038E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_F_S_wheel_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_F_S_wheel_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base3R_F_sW_Link"
+    type="continuous">
+    <origin
+      xyz="0 0.0021583 0.26999"
+      rpy="0 0 0" />
+    <parent
+      link="R_F_ST_Link" />
+    <child
+      link="R_F_S_wheel_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="R_B_ST_Link">
+    <inertial>
+      <origin
+        xyz="0.001288 8.3101E-05 0.055764"
+        rpy="0 0 0" />
+      <mass
+        value="0.28023" />
+      <inertia
+        ixx="0.0011051"
+        ixy="-7.1068E-20"
+        ixz="3.5053E-20"
+        iyy="0.0010401"
+        iyz="-1.4512E-06"
+        izz="6.625E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_B_ST_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_B_ST_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base2R_B_S_Link"
+    type="continuous">
+    <origin
+      xyz="0.124 -0.22 0.0535"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="R_B_ST_Link" />
+    <axis
+      xyz="-1 0 0" />
+  </joint>
+  <link
+    name="R_B_S_wheel_Link">
+    <inertial>
+      <origin
+        xyz="0 2.7756E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.0012284" />
+      <inertia
+        ixx="6.28E-08"
+        ixy="-7.0683E-25"
+        ixz="-4.0158E-24"
+        iyy="3.3038E-08"
+        iyz="5.3299E-26"
+        izz="3.3038E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_B_S_wheel_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/R_B_S_wheel_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base3R_B_sW_Link"
+    type="continuous">
+    <origin
+      xyz="0 0.00040236 0.27"
+      rpy="0 0 0" />
+    <parent
+      link="R_B_ST_Link" />
+    <child
+      link="R_B_S_wheel_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="most_L_F_wheel_Link">
+    <inertial>
+      <origin
+        xyz="0 -5.5511E-17 8.6736E-19"
+        rpy="0 0 0" />
+      <mass
+        value="0.084193" />
+      <inertia
+        ixx="2.4769E-05"
+        ixy="1.6116E-21"
+        ixz="2.078E-22"
+        iyy="1.4841E-05"
+        iyz="-1.9627E-22"
+        izz="1.4841E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/most_L_F_wheel_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 0.4" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/most_L_F_wheel_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="most_L_F_wheel"
+    type="continuous">
+    <origin
+      xyz="-0.1475 0.391 0.006"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="most_L_F_wheel_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+  <link
+    name="most_R_F_wheel_Link">
+    <inertial>
+      <origin
+        xyz="0 -5.5511E-17 8.6736E-19"
+        rpy="0 0 0" />
+      <mass
+        value="0.084193" />
+      <inertia
+        ixx="2.4769E-05"
+        ixy="-1.4252E-21"
+        ixz="1.2664E-22"
+        iyy="1.4841E-05"
+        iyz="-4.4778E-23"
+        izz="1.4841E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/most_R_F_wheel_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 0.4" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://stee_new/meshes/most_R_F_wheel_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="most_R_F_wheel"
+    type="continuous">
+    <origin
+      xyz="0.1475 0.391 0.006"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="most_R_F_wheel_Link" />
+    <axis
+      xyz="1 0 0" />
+  </joint>
+</robot>

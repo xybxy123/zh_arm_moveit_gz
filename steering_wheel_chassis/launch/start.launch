@@ -5,6 +5,7 @@
 
     <!-- 加载台阶URDF到另一个参数 -->
     <param name="stair_description" command="$(find xacro)/xacro '$(find steering_wheel_chassis)/urdf/stair.urdf'" />
+    <param name="arena_description" command="$(find xacro)/xacro '$(find zwei)/urdf/zwei.urdf'"/>
 
     <!-- 2. 加载控制器配置（若需要控制轮子，必须保留） -->
     <rosparam file="$(find steering_wheel_chassis)/config/controllers.yaml" command="load" />
@@ -15,15 +16,18 @@
         type="spawn_model" 
         name="spawn_model" 
         output="screen"
-        args="-urdf -model steering_wheel_chassis -param robot_description -z 0.05" /> <!-- 模型名与正常launch保持一致，z值调整为0.3 -->
-
+        args="-urdf -model steering_wheel_chassis -param robot_description -x 9 -y 2.26 -z 0.05" /> <!-- 模型名与正常launch保持一致，z值调整为0.3 -->
+  
+    <!-- <node name="spawn_arena" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -param arena_description -model competition_area -x 0 -y 0 -z 0"
+        respawn="false" output="screen"/> -->
     <!-- 生成台阶模型（独立模型） -->
     <!-- <node name="spawn_stair" pkg="gazebo_ros" type="spawn_model" 
           args="-urdf -param stair_description -model heavy_stair -x 0 -y 5 -z 0" /> -->
 
     <!-- 4. 启动Gazebo，先暂停物理引擎（与正常launch一致，方便观察初始状态） -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="paused" value="false"/> <!-- 先暂停，确认模型位置正常后再手动启动物理引擎 -->
+        <arg name="paused" value="true"/> <!-- 先暂停，确认模型位置正常后再手动启动物理引擎 -->
         <arg name="world_name" value="$(find steering_wheel_chassis)/worlds/inertial_test.world"/>
     </include>
 

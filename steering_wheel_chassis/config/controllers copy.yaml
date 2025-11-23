@@ -1,0 +1,114 @@
+# 正确的controllers.yaml（严格检查缩进，使用空格而非制表符）
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+left_front_wheel_controller:
+  type: effort_controllers/JointVelocityController
+  joint: base2L_F_W_Link
+  pid:
+    p: 0.36
+    i: 0.0001
+    d: 0.000001
+    i_clamp: 0.015
+  publish_state: true
+
+left_back_wheel_controller:
+  type: effort_controllers/JointVelocityController
+  joint: base2L_B_W_Link
+  pid:
+    p: 0.36
+    i: 0.0001
+    d: 0.000001
+    i_clamp: 0.015
+  publish_state: true
+
+right_front_wheel_controller:
+  type: effort_controllers/JointVelocityController
+  joint: base2R_F_W_Link
+  pid:
+    p: 0.36
+    i: 0.0001
+    d: 0.000001
+    i_clamp: 0.015
+  publish_state: true
+
+right_back_wheel_controller:
+  type: effort_controllers/JointVelocityController
+  joint: base2R_B_W_Link
+  pid:
+    p: 0.36
+    i: 0.0001
+    d: 0.000001
+    i_clamp: 0.015
+  publish_state: true
+  
+# controllers.yaml - 单个关节位置控制器
+left_front_steer_controller:
+  type: position_controllers/JointPositionController
+  joint: base2L_F_S_Link
+  max_velocity: 0.01
+  publish_state: true
+
+left_back_steer_controller:
+  type: position_controllers/JointPositionController
+  joint: base2L_B_S_Link
+  max_velocity: 0.01 
+  publish_state: true
+
+right_front_steer_controller:
+  type: position_controllers/JointPositionController
+  joint: base2R_F_S_Link
+  max_velocity: 0.01
+  publish_state: true
+
+right_back_steer_controller:
+  type: position_controllers/JointPositionController
+  joint: base2R_B_S_Link
+  max_velocity: 0.01
+  publish_state: true
+
+
+
+
+
+# 小轮子控制器 - 新增（与主车轮相同的配置方式）
+left_front_small_wheel_controller:
+  type: effort_controllers/JointVelocityController
+  joint: base3L_F_sW_Link
+  pid:
+    p: 500
+    i: 0.0001
+    d: 0.000001
+    i_clamp: 0.015
+  publish_state: true
+
+left_back_small_wheel_controller:
+  type: effort_controllers/JointVelocityController
+  joint: base3L_B_sW_Link
+  pid:
+    p: 500
+    i: 0.0001
+    d: 0.000001
+    i_clamp: 0.015
+  publish_state: true
+
+right_front_small_wheel_controller:
+  type: effort_controllers/JointVelocityController
+  joint: base3R_F_sW_Link
+  pid:
+    p: 500
+    i: 0.0001
+    d: 0.000001
+    i_clamp: 0.015
+  publish_state: true
+
+right_back_small_wheel_controller:
+  type: effort_controllers/JointVelocityController
+  joint: base3R_B_sW_Link
+  pid:
+    p: 500
+    i: 0.0001
+    d: 0.000001
+    i_clamp: 0.015
+  publish_state: true

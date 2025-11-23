@@ -9,6 +9,8 @@ project(steering_wheel_chassis_control)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  geometry_msgs
+  sensor_msgs  # 新增：JointState消息依赖
 )
 
 ## System dependencies are found with CMake's conventions
@@ -157,8 +159,30 @@ target_link_libraries(example
   ${catkin_LIBRARIES}
 )
 
-add_executable(test_  src/four_link_ctrl.cpp src/test_.cpp)
+add_executable(test_  src/chassis_move.cpp  src/four_link_ctrl.cpp src/test_.cpp)
 target_link_libraries(test_
+  ${catkin_LIBRARIES}
+)
+
+add_executable(keyboard_teleop_node src/keyboard_teleop.cpp)
+target_link_libraries(keyboard_teleop_node
+  ${catkin_LIBRARIES}
+)
+
+
+
+add_library(wheel_odometry_lib
+  src/wheel_odometry.cpp
+)
+target_link_libraries(wheel_odometry_lib
+  ${catkin_LIBRARIES}
+)
+
+add_executable(wheel_odometry_node
+  src/odometry_node.cpp
+)
+target_link_libraries(wheel_odometry_node
+  wheel_odometry_lib
   ${catkin_LIBRARIES}
 )
 

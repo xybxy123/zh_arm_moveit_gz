@@ -1,0 +1,1 @@
+controller_joint_names: ['', 'L_F_wheel', 'L_B_wheel', 'R_F_wheel', 'R_B_wheel', 'L_F_ST', 'L_F_S_wheel', 'L_B_ST', 'L_B_S_wheel', 'R_F_ST', 'R_F_S_wheel', 'R_B_ST', 'R_B_S_wheel', 'most_L_F_wheel', 'most_R_F_wheel', ]

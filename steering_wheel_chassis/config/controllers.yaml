@@ -7,40 +7,40 @@ left_front_wheel_controller:
   type: effort_controllers/JointVelocityController
   joint: base2L_F_W_Link
   pid:
-    p: 0.36
-    i: 0.0001
-    d: 0.000001
-    i_clamp: 0.015
+    p: 0.2
+    i: 0
+    d: 0.0
+    i_clamp: 0
   publish_state: true
 
 left_back_wheel_controller:
   type: effort_controllers/JointVelocityController
   joint: base2L_B_W_Link
   pid:
-    p: 0.36
-    i: 0.0001
-    d: 0.000001
-    i_clamp: 0.015
+    p: 0.2
+    i: 0
+    d: 0.0
+    i_clamp: 0
   publish_state: true
 
 right_front_wheel_controller:
   type: effort_controllers/JointVelocityController
   joint: base2R_F_W_Link
   pid:
-    p: 0.36
-    i: 0.0001
-    d: 0.000001
-    i_clamp: 0.015
+    p: 0.2
+    i: 0
+    d: 0.0
+    i_clamp: 0
   publish_state: true
 
 right_back_wheel_controller:
   type: effort_controllers/JointVelocityController
   joint: base2R_B_W_Link
   pid:
-    p: 0.36
-    i: 0.0001
-    d: 0.000001
-    i_clamp: 0.015
+    p: 0.2
+    i: 0
+    d: 0.0
+    i_clamp: 0
   publish_state: true
   
 # controllers.yaml - 单个关节位置控制器
@@ -77,38 +77,38 @@ left_front_small_wheel_controller:
   type: effort_controllers/JointVelocityController
   joint: base3L_F_sW_Link
   pid:
-    p: 500
-    i: 0.0001
-    d: 0.000001
-    i_clamp: 0.015
+    p: 0
+    i: 0
+    d: 0
+    i_clamp: 0
   publish_state: true
 
 left_back_small_wheel_controller:
   type: effort_controllers/JointVelocityController
   joint: base3L_B_sW_Link
   pid:
-    p: 500
-    i: 0.0001
-    d: 0.000001
-    i_clamp: 0.015
+    p: 0
+    i: 0
+    d: 0
+    i_clamp: 0
   publish_state: true
 
 right_front_small_wheel_controller:
   type: effort_controllers/JointVelocityController
   joint: base3R_F_sW_Link
   pid:
-    p: 500
-    i: 0.0001
-    d: 0.000001
-    i_clamp: 0.015
+    p: 0
+    i: 0
+    d: 0
+    i_clamp: 0
   publish_state: true
 
 right_back_small_wheel_controller:
   type: effort_controllers/JointVelocityController
   joint: base3R_B_sW_Link
   pid:
-    p: 500
-    i: 0.0001
-    d: 0.000001
-    i_clamp: 0.015
+    p: 0
+    i: 0
+    d: 0
+    i_clamp: 0
   publish_state: true

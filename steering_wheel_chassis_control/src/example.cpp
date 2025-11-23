@@ -16,10 +16,11 @@ enum class ChassisState {
 
 // 可配置的时间参数（单位：秒）
 struct TimingConfig {
-    double move_fast_duration = 1;           // 快速前进时间
-    double up_duration = 8.0;                // 抬起状态时间
-    double already_up_front_duration = 6.0;  // 前轮抬起完成时间
-    double already_up_back_duration = 6.0;   // 后轮抬起完成时间
+    // double move_fast_duration = 2.0012;    // 快速前进时间
+    double move_fast_duration = 1.2;       // 快速前进时间
+    double up_duration = 0.1;              // 抬起状态时间
+    double already_up_front_duration = 2;  // 前轮抬起完成时间
+    double already_up_back_duration = 2;   // 后轮抬起完成时间
 };
 
 bool waitForSystemReady(ros::NodeHandle& nh, ros::Rate& rate);
@@ -69,11 +70,12 @@ int main(int argc, char** argv) {
                     ROS_INFO("=== State: INIT ===");
                     chassis.set_x_vel(0.0);
                     steering_controller.run(0.02, 0.002);
+                    chassis.setAccelerationLimits(14, 0.5);
                     state_initialized = true;
                     state_start_time = ros::Time::now();
                 }
 
-                if (elapsed_time >= 0.5) {  // INIT状态固定2秒
+                if (elapsed_time >= 0.001) {
                     ROS_INFO("INIT completed, transitioning to MOVE_FAST");
                     current_state = ChassisState::MOVE_FAST;
                     state_initialized = false;
@@ -83,7 +85,7 @@ int main(int argc, char** argv) {
             case ChassisState::MOVE_FAST:
                 if (!state_initialized) {
                     ROS_INFO("=== State: MOVE_FAST (1.0 m/s for %.1f s) ===", timing.move_fast_duration);
-                    chassis.set_x_vel(3.7);
+                    chassis.set_x_vel(5.0);
                     state_initialized = true;
                     state_start_time = ros::Time::now();
                 }
@@ -95,7 +97,7 @@ int main(int argc, char** argv) {
                     }
                 } else {
                     ROS_INFO("MOVE_FAST completed, transitioning to UP_STATE");
-                    chassis.set_x_vel(3.7);
+                    chassis.set_x_vel(5.0);
                     current_state = ChassisState::UP_STATE;
                     state_initialized = false;
                 }
@@ -103,19 +105,10 @@ int main(int argc, char** argv) {
 
             case ChassisState::UP_STATE:
                 if (!state_initialized) {
-                    ROS_INFO("=== State: UP_STATE (for %.1f s) ===", timing.up_duration);
-                    steering_controller.up(0.02, 0.002);
-                    state_initialized = true;
-                    state_start_time = ros::Time::now();
-                }
-
-                if (elapsed_time < timing.up_duration) {
-                    if (static_cast<int>(elapsed_time) % 1 == 0 && elapsed_time > 0) {
-                        ROS_INFO("UP_STATE: %.1f/%.1f s", elapsed_time, timing.up_duration);
-                    }
-                } else {
+                    ROS_INFO("=== State: UP_STATE ===");
+                    steering_controller.up(0.02, 0.002);  // 等待动作完成
                     ROS_INFO("UP_STATE completed, transitioning to ALREADY_UP_FRONT");
-                    current_state = ChassisState::ALREADY_UP_FRONT;
+                    current_state = ChassisState::ALREADY_UP_FRONT;  // 直接切换
                     state_initialized = false;
                 }
                 break;

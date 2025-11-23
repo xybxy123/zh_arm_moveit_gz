@@ -4,7 +4,7 @@
 
 
     <!-- 引入机器人本体URDF模型 -->
-    <xacro:include filename="$(find steering_wheel_chassis)/urdf/steering_wheel_chassis.urdf"/>
+    <xacro:include filename="$(find stee_new)/urdf/stee_new.urdf"/>
 
     <!-- 引入车轮关节传动配置 -->
     <xacro:include filename="$(find steering_wheel_chassis)/urdf/steering_wheel_chassis_trans.xacro"/>

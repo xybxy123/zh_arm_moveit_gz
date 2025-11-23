@@ -14,10 +14,10 @@ namespace four_link_ctrl {
           rf_continuous_angle_(0.0),
           rb_continuous_angle_(0.0) {
         // 初始化转向控制器发布器
-        lf_steer_pub_ = nh.advertise<std_msgs::Float64>("/left_front_steer_controller/command", 1);
-        lb_steer_pub_ = nh.advertise<std_msgs::Float64>("/left_back_steer_controller/command", 1);
-        rf_steer_pub_ = nh.advertise<std_msgs::Float64>("/right_front_steer_controller/command", 1);
-        rb_steer_pub_ = nh.advertise<std_msgs::Float64>("/right_back_steer_controller/command", 1);
+        lf_steer_pub_ = nh.advertise<std_msgs::Float64>("/left_front_steer_controller/command", 0);
+        lb_steer_pub_ = nh.advertise<std_msgs::Float64>("/left_back_steer_controller/command", 0);
+        rf_steer_pub_ = nh.advertise<std_msgs::Float64>("/right_front_steer_controller/command", 0);
+        rb_steer_pub_ = nh.advertise<std_msgs::Float64>("/right_back_steer_controller/command", 0);
 
         ros::Duration(1.0).sleep();
         ROS_INFO("FourLinkCtrl initialized successfully");
@@ -25,10 +25,7 @@ namespace four_link_ctrl {
 
     FourLinkCtrl::~FourLinkCtrl() { ROS_INFO("FourLinkCtrl shutdown"); }
 
-    // ==================== 角度规范化函数 ====================
-
     double FourLinkCtrl::normalizeAngle(double angle) {
-        // 将角度规范化到 [-π, π] 范围
         while (angle > M_PI) {
             angle -= 2.0 * M_PI;
         }
@@ -38,11 +35,9 @@ namespace four_link_ctrl {
         return angle;
     }
 
-    // ==================== 基本转向控制方法 ====================
-
     void FourLinkCtrl::setLfSteerAngle(double angle) {
         lf_angle_ = normalizeAngle(angle);
-        lf_continuous_angle_ = angle;  // 记录原始角度
+        lf_continuous_angle_ = angle;
         publishSteerCommands();
     }
 
@@ -63,66 +58,6 @@ namespace four_link_ctrl {
         rb_continuous_angle_ = angle;
         publishSteerCommands();
     }
-
-    // ==================== 连续旋转控制方法 ====================
-
-    void FourLinkCtrl::setLfSteerAngleContinuous(double angle) {
-        lf_continuous_angle_ = angle;
-        lf_angle_ = normalizeAngle(angle);
-        publishSteerCommands();
-    }
-
-    void FourLinkCtrl::setLbSteerAngleContinuous(double angle) {
-        lb_continuous_angle_ = angle;
-        lb_angle_ = normalizeAngle(angle);
-        publishSteerCommands();
-    }
-
-    void FourLinkCtrl::setRfSteerAngleContinuous(double angle) {
-        rf_continuous_angle_ = angle;
-        rf_angle_ = normalizeAngle(angle);
-        publishSteerCommands();
-    }
-
-    void FourLinkCtrl::setRbSteerAngleContinuous(double angle) {
-        rb_continuous_angle_ = angle;
-        rb_angle_ = normalizeAngle(angle);
-        publishSteerCommands();
-    }
-
-    void FourLinkCtrl::rotateLfSteer(double delta_angle) {
-        lf_continuous_angle_ += delta_angle;
-        lf_angle_ = normalizeAngle(lf_continuous_angle_);
-        publishSteerCommands();
-    }
-
-    void FourLinkCtrl::rotateLbSteer(double delta_angle) {
-        lb_continuous_angle_ += delta_angle;
-        lb_angle_ = normalizeAngle(lb_continuous_angle_);
-        publishSteerCommands();
-    }
-
-    void FourLinkCtrl::rotateRfSteer(double delta_angle) {
-        rf_continuous_angle_ += delta_angle;
-        rf_angle_ = normalizeAngle(rf_continuous_angle_);
-        publishSteerCommands();
-    }
-
-    void FourLinkCtrl::rotateRbSteer(double delta_angle) {
-        rb_continuous_angle_ += delta_angle;
-        rb_angle_ = normalizeAngle(rb_continuous_angle_);
-        publishSteerCommands();
-    }
-
-    void FourLinkCtrl::setLfSteerAngleDeg(double degrees) { setLfSteerAngleContinuous(degrees * M_PI / 180.0); }
-
-    void FourLinkCtrl::setLbSteerAngleDeg(double degrees) { setLbSteerAngleContinuous(degrees * M_PI / 180.0); }
-
-    void FourLinkCtrl::setRfSteerAngleDeg(double degrees) { setRfSteerAngleContinuous(degrees * M_PI / 180.0); }
-
-    void FourLinkCtrl::setRbSteerAngleDeg(double degrees) { setRbSteerAngleContinuous(degrees * M_PI / 180.0); }
-
-    // ==================== 平滑运动控制方法 ====================
 
     void FourLinkCtrl::smoothSetAllAngles(double lf_angle, double rf_angle, double lb_angle, double rb_angle, double step,
                                           double interval) {
@@ -173,12 +108,6 @@ namespace four_link_ctrl {
         smoothSetAllAngles(angle, angle, angle, angle, step, interval);
     }
 
-    void FourLinkCtrl::smoothSetAckermannSteering(double front_angle, double step, double interval) {
-        smoothSetAllAngles(front_angle, front_angle, 0.0, 0.0, step, interval);
-    }
-
-    // ==================== 状态控制方法 ====================
-
     void FourLinkCtrl::run(double step, double interval) {
         ROS_INFO("State: RUN - All wheels to 0");
         smoothSetAllSameAngle(0.0, step, interval);
@@ -187,29 +116,24 @@ namespace four_link_ctrl {
     void FourLinkCtrl::up(double step, double interval) {
         ROS_INFO("State: UP - Front: 0→3.14, Rear: 0→-3.14 (simultaneously)");
 
-        // 使用更快的参数
-        step = 0.01;       // 增大步长
-        interval = 0.005;  // 减小间隔
+        step = 0.004;
+        interval = 0.001;
 
-        smoothSetDifferentialSteering(3.14, -3.14, step, interval);
+        smoothSetDifferentialSteering(3.1415, -3.1415, step, interval);
     }
 
     void FourLinkCtrl::already_up_front(double step, double interval) {
         ROS_INFO("State: ALREADY_UP_FRONT - Rear fixed, Front: 3.14→-3.14→0");
 
-        // 使用更快的参数
-        step = 0.01;
-        interval = 0.005;
+        step = 0.012;
+        interval = 0.001;
 
-        // 第一步：前轮从3.14到-3.14（最短路径，只转0.02弧度）
         ROS_INFO("Step 1: Front 3.14 → -3.14 (shortest path)");
 
-        // 直接设置到-3.14，系统会自动选择最短路径
         setLfSteerAngle(-3.14);
         setRfSteerAngle(-3.14);
-        ros::Duration(0.5).sleep();  // 短暂等待
+        ros::Duration(0.5).sleep();
 
-        // 第二步：前轮从-3.14增加到0，后轮保持-3.14不动
         ROS_INFO("Step 2: Front -3.14 → 0, Rear fixed at -3.14");
 
         double start_front = -3.14;
@@ -230,14 +154,13 @@ namespace four_link_ctrl {
             setLbSteerAngle(fixed_rear);
             setRbSteerAngle(fixed_rear);
 
-            if (i % 50 == 0) {  // 减少输出频率
+            if (i % 50 == 0) {
                 ROS_INFO("ALREADY_UP_FRONT Progress: %.1f%% | Front: %.3f", t * 100.0, front_angle);
             }
 
             rate.sleep();
         }
 
-        // 确保精确到达目标
         setLfSteerAngle(target_front);
         setRfSteerAngle(target_front);
         setLbSteerAngle(fixed_rear);
@@ -247,7 +170,6 @@ namespace four_link_ctrl {
     void FourLinkCtrl::already_up_back(double step, double interval) {
         ROS_INFO("State: ALREADY_UP_BACK - Front fixed, Rear: -3.14 → 0");
 
-        // 使用更快的参数
         step = 0.01;
         interval = 0.005;
 
@@ -269,21 +191,18 @@ namespace four_link_ctrl {
             setLbSteerAngle(rear_angle);
             setRbSteerAngle(rear_angle);
 
-            if (i % 50 == 0) {  // 减少输出频率
+            if (i % 50 == 0) {
                 ROS_INFO("ALREADY_UP_BACK Progress: %.1f%% | Rear: %.3f", t * 100.0, rear_angle);
             }
 
             rate.sleep();
         }
 
-        // 确保精确到达目标
         setLfSteerAngle(fixed_front);
         setRfSteerAngle(fixed_front);
         setLbSteerAngle(target_rear);
         setRbSteerAngle(target_rear);
     }
-
-    // ==================== 私有方法实现 ====================
 
     void FourLinkCtrl::publishSteerCommands() {
         std_msgs::Float64 cmd;
