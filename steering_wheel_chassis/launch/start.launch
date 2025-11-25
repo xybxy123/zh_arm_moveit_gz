@@ -11,25 +11,31 @@
     <rosparam file="$(find steering_wheel_chassis)/config/controllers.yaml" command="load" />
 
     <!-- 3. 生成模型：使用与正常launch接近的初始高度z=0.3，避免初始碰撞问题 -->
-    <node 
+    <!-- <node 
         pkg="gazebo_ros" 
         type="spawn_model" 
         name="spawn_model" 
         output="screen"
-        args="-urdf -model steering_wheel_chassis -param robot_description -x 9 -y 2.26 -z 0.05" /> <!-- 模型名与正常launch保持一致，z值调整为0.3 -->
+        args="-urdf -model steering_wheel_chassis -param robot_description -x 9 -y 2.26 -z 0.25" /> -->
   
     <!-- <node name="spawn_arena" pkg="gazebo_ros" type="spawn_model"
         args="-urdf -param arena_description -model competition_area -x 0 -y 0 -z 0"
         respawn="false" output="screen"/> -->
     <!-- 生成台阶模型（独立模型） -->
-    <!-- <node name="spawn_stair" pkg="gazebo_ros" type="spawn_model" 
-          args="-urdf -param stair_description -model heavy_stair -x 0 -y 5 -z 0" /> -->
+        <node 
+        pkg="gazebo_ros" 
+        type="spawn_model" 
+        name="spawn_model" 
+        output="screen"
+        args="-urdf -model steering_wheel_chassis -param robot_description -x 0 -y 1.8 -z 0.25" />
+    <node name="spawn_stair" pkg="gazebo_ros" type="spawn_model" 
+          args="-urdf -param stair_description -model heavy_stair -x 0 -y 1.8 -z 0" />
 
     <!-- 4. 启动Gazebo，先暂停物理引擎（与正常launch一致，方便观察初始状态） -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="paused" value="true"/> <!-- 先暂停，确认模型位置正常后再手动启动物理引擎 -->
-        <arg name="world_name" value="$(find steering_wheel_chassis)/worlds/inertial_test.world"/>
     </include>
+        <!-- <arg name="world_name" value="$(find steering_wheel_chassis)/worlds/inertial_test.world"/> -->
 
 
     <!-- 6. 启用控制器加载（若需要控制轮子转动，必选） -->

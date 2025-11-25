@@ -114,15 +114,7 @@ namespace chassis_move {
         return new_velocity;
     }
 
-    void ChassisMove::set_x_vel(double vel) {
-        target_velocity_ = vel;
-        if (vel < -3.0) {
-            target_velocity_ = -3.0;
-        }
-        if (vel > 3.0) {
-            target_velocity_ = 3.0;
-        }
-    }
+    void ChassisMove::set_x_vel(double vel) { target_velocity_ = 2.0 * vel; }
 
     void ChassisMove::setAccelerationLimits(double max_accel, double max_decel) {
         if (max_accel > 0) {

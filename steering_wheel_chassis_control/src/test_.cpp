@@ -17,7 +17,7 @@ enum class ChassisState {
 // 可配置的时间参数（单位：秒）
 struct TimingConfig {
     // double move_fast_duration = 2.0012;    // 快速前进时间
-    double move_fast_duration = 2;         // 快速前进时间
+    double move_fast_duration = 0.5;       // 快速前进时间
     double up_duration = 0.1;              // 抬起状态时间
     double already_up_front_duration = 2;  // 前轮抬起完成时间
     double already_up_back_duration = 2;   // 后轮抬起完成时间
@@ -70,12 +70,12 @@ int main(int argc, char** argv) {
                     ROS_INFO("=== State: INIT ===");
                     chassis.set_x_vel(0.0);
                     steering_controller.smoothSetDifferentialSteering(1.5708, -1.5708, 0.05, 0.01);
-                    chassis.setAccelerationLimits(0.5, 0.5);
+                    chassis.setAccelerationLimits(200, 200);
                     state_initialized = true;
                     state_start_time = ros::Time::now();
                 }
 
-                if (elapsed_time >= 0.001) {
+                if (elapsed_time >= 1) {
                     ROS_INFO("INIT completed, transitioning to MOVE_FAST");
                     current_state = ChassisState::MOVE_FAST;
                     state_initialized = false;
@@ -84,27 +84,32 @@ int main(int argc, char** argv) {
 
             case ChassisState::MOVE_FAST:
                 if (!state_initialized) {
-                    ROS_INFO("=== State: MOVE_FAST (1.0 m/s for %.1f s) ===", timing.move_fast_duration);
-                    chassis.set_x_vel(0.5);
+                    ROS_INFO("=== State: MOVE_FAST (0.5 m/s for %.1f s) ===", timing.move_fast_duration);
+                    chassis.set_x_vel(0.7);
                     state_initialized = true;
-                    state_start_time = ros::Time::now();
+                    state_start_time = ros::Time::now();  // 必须在初始化时重置时间！
                 }
 
+                elapsed_time = (ros::Time::now() - state_start_time).toSec();  // 实时更新耗时
                 if (elapsed_time < timing.move_fast_duration) {
-                    // 显示进度
-                    chassis.set_x_vel(0.5);
-                    if (static_cast<int>(elapsed_time) % 1 == 0 && elapsed_time > 0) {
-                        ROS_INFO("MOVE_FAST: %.1f/%.1f s", elapsed_time, timing.move_fast_duration);
+                    // 优化：每 0.1秒 打印一次，或按百分比打印（适合短时间）
+                    static double last_print_time = 0.0;
+                    if (elapsed_time - last_print_time >= 0.1) {  // 每0.1秒打印一次
+                        ROS_INFO("MOVE_FAST: %.1f/%.1f s (%.0f%%)", elapsed_time, timing.move_fast_duration,
+                                 (elapsed_time / timing.move_fast_duration) * 100);
+                        last_print_time = elapsed_time;
                     }
+                    chassis.set_x_vel(0.7);
                 } else {
-                    ROS_INFO("MOVE_FAST completed, transitioning to UP_STATE");
-                    chassis.set_x_vel(0.5);
+                    ROS_INFO("MOVE_FAST completed (total elapsed: %.1f s), transitioning to UP_STATE", elapsed_time);
+                    chassis.set_x_vel(0.7);  // 退出时停止移动（原代码仍设为0.5，不合理）
                     current_state = ChassisState::UP_STATE;
                     state_initialized = false;
                 }
                 break;
 
             case ChassisState::UP_STATE:
+                chassis.set_x_vel(0.7);
                 if (!state_initialized) {
                     ROS_INFO("=== State: UP_STATE ===");
                     steering_controller.up(0.05, 0.01);  // 等待动作完成
@@ -115,6 +120,7 @@ int main(int argc, char** argv) {
                 break;
 
             case ChassisState::ALREADY_UP_FRONT:
+                chassis.set_x_vel(0.7);
                 if (!state_initialized) {
                     ROS_INFO("=== State: ALREADY_UP_FRONT (for %.1f s) ===", timing.already_up_front_duration);
                     steering_controller.already_up_front(0.05, 0.01);
@@ -134,6 +140,7 @@ int main(int argc, char** argv) {
                 break;
 
             case ChassisState::ALREADY_UP_BACK:
+                chassis.set_x_vel(0.7);
                 if (!state_initialized) {
                     ROS_INFO("=== State: ALREADY_UP_BACK (for %.1f s) ===", timing.already_up_back_duration);
                     steering_controller.already_up_back(0.05, 0.01);

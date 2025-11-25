@@ -5,9 +5,9 @@
 
  <include file="$(find steering_wheel_chassis)/launch/start.launch"></include>
 
-<node name="test_" pkg="steering_wheel_chassis_control" type="test_" output="screen" />
+<!-- <node name="test_" pkg="steering_wheel_chassis_control" type="test_" output="screen" /> -->
 
-<!-- <node name="example" pkg="steering_wheel_chassis_control" type="example" output="screen" /> -->
+<node name="example" pkg="steering_wheel_chassis_control" type="example" output="screen" />
   
 <node name="wheel_odometry" pkg="steering_wheel_chassis_control" type="wheel_odometry_node" output="screen" />
 
