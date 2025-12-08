@@ -14,7 +14,7 @@ const std::vector<std::string> TARGET_JOINTS = {
     "base_to_turret", "turret_to_first_arm", "first_to_second_arm",
     "second_to_third_arm"};
 
-const uint8_t JOINT_POS_FRAME_ID = 3;
+const uint8_t JOINT_POS_FRAME_ID = 1;
 
 /**
  * @brief /joint_states 话题的回调函数，用于提取关节位置并通过串口发送
@@ -52,8 +52,7 @@ void jointStateCallback(const sensor_msgs::JointState::ConstPtr &msg) {
     }
 
     if ((found_count > 0) && (found_count == 4)) {
-        serialComm->serial_send(JOINT_POS_FRAME_ID, send_data,
-                                TARGET_JOINTS.size());
+        serialComm->serial_send(JOINT_POS_FRAME_ID, send_data, 4);
 
         ROS_INFO("Sent Joints (ID %d): %s=%.4f, %s=%.4f, %s=%.4f, %s=%.4f",
                  JOINT_POS_FRAME_ID, TARGET_JOINTS[0].c_str(), send_data[0],
@@ -74,7 +73,7 @@ int main(int argc, char **argv) {
     // --- 1. 串口初始化 ---
     std::string port;
     // 从参数服务器获取串口端口名，默认为 /dev/ttyACM0
-    nh.param<std::string>("serial_port", port, "/dev/ttyUSB0");
+    nh.param<std::string>("serial_port", port, "/dev/ttyACM0");
 
     try {
         // 初始化全局串口对象
