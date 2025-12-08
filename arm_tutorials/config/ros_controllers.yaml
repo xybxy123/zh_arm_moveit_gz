@@ -5,7 +5,7 @@ all_arm_group_controller:
     - joint2
     - joint3
     - joint4
-  goal_tolerance: 0.02  # 目标位置最大允许误差（弧度），覆盖关节1的0.008132误差
+  goal_tolerance: 0.04  # 目标位置最大允许误差（弧度），覆盖关节1的0.008132误差
   path_tolerance: 0.03  # 轨迹中间点最大允许误差（弧度），避免路径中微小误差失败
   gains:
     joint1:
@@ -33,7 +33,7 @@ end_efffector_group_controller:
   joints:
     - joint5
     - joint6
-  goal_tolerance: 0.02
+  goal_tolerance: 0.04
   path_tolerance: 0.03
   gains:
     joint5:

@@ -11,7 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   serial
-  # vision_msgs
+  sensor_msgs
+  trajectory_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -137,13 +138,19 @@ target_link_libraries(ros_mcu0
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(serial_test src/serial_test.cpp)
-add_executable(serial_test src/arm_serial.cpp)
-add_dependencies(serial_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(serial_test
+add_executable(arm_serial src/arm_serial.cpp)
+# add_executable(joint_listener src/joint_listener.cpp)
+
+add_dependencies(arm_serial ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+target_link_libraries(arm_serial
   ${catkin_LIBRARIES}
   ros_mcu0
 )
-
+# target_link_libraries(joint_listener
+#   ${catkin_LIBRARIES}
+#   ros_mcu0
+# )
 #############
 ## Install ##
 #############

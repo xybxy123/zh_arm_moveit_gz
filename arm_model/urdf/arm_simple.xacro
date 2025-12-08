@@ -8,16 +8,16 @@
   <xacro:property name="base_height" value="0.0" />  
   <xacro:property name="gap_between_base_turret" value="0" /> 
   <xacro:property name="first_arm_length" value="0.45857" />
-  <xacro:property name="first_arm_radius" value="0.03" />
+  <xacro:property name="first_arm_radius" value="0.01" />
   <xacro:property name="first_arm_mass" value="0.5" />
   
   <xacro:property name="second_arm_length" value="0.41476" />
-  <xacro:property name="second_arm_radius" value="0.03" />
+  <xacro:property name="second_arm_radius" value="0.01" />
   <xacro:property name="second_arm_mass" value="0.5" />
   
   <!-- 添加第三连杆属性 -->
   <xacro:property name="third_arm_length" value="0.1335" />
-  <xacro:property name="third_arm_radius" value="0.03" />
+  <xacro:property name="third_arm_radius" value="0.01" />
   <xacro:property name="third_arm_mass" value="0.3" />
   
   <!-- 添加末端小球属性 -->
