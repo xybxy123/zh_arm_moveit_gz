@@ -2,7 +2,7 @@
 <launch>
   <arg name="model" default="$(find arm_model)/urdf/arm_simple.xacro"/>
   <param name="robot_description" command="$(find xacro)/xacro '$(arg model)'"/>
-  <param name="arena_description" command="$(find xacro)/xacro '$(find zwei)/urdf/zwei.urdf'"/>
+  <!-- <param name="arena_description" command="$(find xacro)/xacro '$(find zwei)/urdf/zwei.urdf'"/> -->
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="paused" value="false"/>
@@ -17,9 +17,9 @@
         args="-param robot_description -urdf -model simple_arm_3link -x 0 -y 0 -z 0"
         output="screen" />
 
-  <node name="spawn_arena" pkg="gazebo_ros" type="spawn_model"
+  <!-- <node name="spawn_arena" pkg="gazebo_ros" type="spawn_model"
         args="-urdf -param arena_description -model competition_area -x 0 -y 0 -z 0"
-        respawn="false" output="screen"/>
+        respawn="false" output="screen"/> -->
 
   <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
 

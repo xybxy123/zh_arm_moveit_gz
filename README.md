@@ -1,3 +1,8 @@
+弃用的包：
+arm_all
+arm_all_moveit_config
+
+
 # zh_arm_moveit_gz
 
 基于 MoveIt! 和 Gazebo 的机械臂控制示例，通过 `move_group_interface` 实现关节空间与空间控制。

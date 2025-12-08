@@ -90,12 +90,16 @@
     </collision>
   </link>
 
-  <joint name="world_to_base_fixed" type="fixed">
+  <!-- <joint name="world_to_base_fixed" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
     <origin xyz="3 4.495 0.68" rpy="0 0 0"/>
+  </joint> -->
+  <joint name="world_to_base_fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
-
 
   <link name="turret_link">
     <inertial>
