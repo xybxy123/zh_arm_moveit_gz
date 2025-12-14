@@ -16,6 +16,11 @@ namespace mcu0_serial
 #define FRAME_END_1 0xFE
 #define MAX_DATA_LENGTH 36
 
+// 新增：STM32 H7 CDC 协议
+#define CDC_HEAD_0   0xAA
+#define CDC_HEAD_1   0x55
+#define CDC_TAIL     0xEE
+
 uint16_t CRC16_Table(uint8_t *p, uint8_t counter);
 
 typedef struct serial_frame
@@ -43,6 +48,8 @@ public:
     serial_mcu(const std::string& port);
     ~serial_mcu();
     size_t serial_send(uint8_t frame_id, float msgs[], uint8_t length);
+    // 新增：下位机 CDC 协议（AA 55 + XOR + EE）
+    size_t serial_send_cdc(uint8_t id, float msgs[], uint8_t length);
     bool serial_read(uint8_t* received_frame_id, float msgs[], uint8_t* received_length);
     bool isOpen() const;
     ros::NodeHandle nh_;

@@ -34,9 +34,9 @@ int main(int argc, char **argv) {
         while (1) {
             ros::Duration(3.0).sleep();
             if (move2pos1) {
-                planner.moveToAbsolutePosition(0.2, 0.5, 0.3);
+                planner.moveToAbsolutePosition(0.5, 0.3, 0.4);
             } else {
-                planner.moveToAbsolutePosition(-0.2, 0.5, 0.3);
+                planner.moveToAbsolutePosition(0.5, -0.3, 0.4);
             }
             move2pos1 = !move2pos1;
         }

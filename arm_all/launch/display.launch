@@ -1,9 +1,12 @@
 <launch>
-  <arg
-    name="model" />
-  <param
+
+  <!-- <arg
+    name="model" /> -->
+  <!-- <param
     name="robot_description"
-    textfile="$(find arm_all)/urdf/arm_all.urdf" />
+    textfile="$(find arm_all)/urdf/arm_all.urdf" /> -->
+  <arg name="model" default="$(find arm_model)/urdf/arm_simple.xacro"/>
+  <param name="robot_description" command="$(find xacro)/xacro '$(arg model)'"/>
   <node
     name="joint_state_publisher_gui"
     pkg="joint_state_publisher_gui"

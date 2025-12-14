@@ -66,6 +66,46 @@ namespace mcu0_serial
         return write_num;
     }
 
+    size_t serial_mcu::serial_send_cdc(uint8_t id, float msgs[], uint8_t length)
+    {
+        if (!serial_.isOpen()) {
+            ROS_ERROR("Serial port is not open.");
+            return 0;
+        }
+
+        // length 是 float 个数，data_len 是字节数
+        const uint8_t data_len = length * sizeof(float);
+        if (data_len == 0) return 0;
+
+        // buf: 2(head) + 1(id) + 1(len) + data_len + 1(check) + 1(tail)
+        std::vector<uint8_t> buf(4 + data_len + 2);
+
+        buf[0] = CDC_HEAD_0;      // 0xAA
+        buf[1] = CDC_HEAD_1;      // 0x55
+        buf[2] = id;              // 这里要和下位机 rx_id 一致（机械臂是 4）
+        buf[3] = data_len;        // 后面 data 的字节数
+
+        // 把 float 按小端字节拷贝进来
+        uint8_t *data_bytes = reinterpret_cast<uint8_t*>(msgs);
+        for (uint8_t i = 0; i < data_len; ++i) {
+            buf[4 + i] = data_bytes[i];
+        }
+
+        // XOR 校验：只对 data 部分做 xor_check，和下位机一致
+        uint8_t check = 0;
+        for (uint8_t i = 0; i < data_len; ++i) {
+            check ^= buf[4 + i];
+        }
+        buf[4 + data_len] = check;
+
+        // 帧尾
+        buf[5 + data_len] = CDC_TAIL;   // 0xEE
+
+        size_t written = serial_.write(buf.data(), buf.size());
+        // ROS_INFO("CDC frame written: %zu bytes (id=%u, len=%u)", written, id, data_len);
+        return written;
+    }
+
     bool serial_mcu::serial_read(uint8_t* received_frame_id, float msgs[], uint8_t* received_length) {
         if (!serial_.isOpen()) {
             ROS_ERROR("Serial port is not open.");

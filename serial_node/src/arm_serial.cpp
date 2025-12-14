@@ -14,7 +14,7 @@ const std::vector<std::string> TARGET_JOINTS = {
     "base_to_turret", "turret_to_first_arm", "first_to_second_arm",
     "second_to_third_arm"};
 
-const uint8_t JOINT_POS_FRAME_ID = 1;
+const uint8_t JOINT_POS_FRAME_ID = 4;
 
 /**
  * @brief /joint_states 话题的回调函数，用于提取关节位置并通过串口发送
@@ -52,7 +52,7 @@ void jointStateCallback(const sensor_msgs::JointState::ConstPtr &msg) {
     }
 
     if ((found_count > 0) && (found_count == 4)) {
-        serialComm->serial_send(JOINT_POS_FRAME_ID, send_data, 4);
+        serialComm->serial_send_cdc(JOINT_POS_FRAME_ID, send_data, 4);
 
         ROS_INFO("Sent Joints (ID %d): %s=%.4f, %s=%.4f, %s=%.4f, %s=%.4f",
                  JOINT_POS_FRAME_ID, TARGET_JOINTS[0].c_str(), send_data[0],
